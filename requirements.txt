@@ -1,0 +1,10 @@
+# JSON parser. Much faster than built-in
+ujson
+# JSON comments
+jsoncomment
+# NBT support
+nbt
+# Chunk reading
+anvil
+# HTTP requests
+requests

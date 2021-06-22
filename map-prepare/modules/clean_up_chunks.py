@@ -22,7 +22,7 @@ import os
 #     palette_id = shifted_data & 2**bits - 1
 #     return section['Palette'][palette_id]
 
-def is_empty_section(anvil_chunk: anvil.Chunk, section= nbt.TAG_Compound):
+def is_empty_section(anvil_chunk, section= nbt.TAG_Compound):
     for x in range(16):
         for y in range(16):
             for z in range(16):

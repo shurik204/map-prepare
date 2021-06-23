@@ -5,6 +5,6 @@ jsoncomment
 # NBT support
 nbt
 # Chunk reading
-anvil
+anvil-parser
 # HTTP requests
 requests

@@ -8,20 +8,6 @@ import anvil
 import io
 import os
 
-# def get_block_from_palette(data: int, data_index: int, section: nbt.TAG_Compound):
-#     # Misc function to get block from palette
-#     # Stolen from "anvil.chunk" module :)
-#     # (P.S: After some digging I mostly understand the math behind all this)
-#     # data - int value of the block
-#     # data_index = index of the record in the "BlockStates"
-#     # section - section of the chunk
-#     bits = max((len(section['Palette']) - 1).bit_length(), 4)
-#     #             (2**64)
-#     data += 18446744073709551616
-#     shifted_data = data >> (data_index % (64 // bits) * bits)
-#     palette_id = shifted_data & 2**bits - 1
-#     return section['Palette'][palette_id]
-
 def is_empty_section(anvil_chunk, section= nbt.TAG_Compound):
     for x in range(16):
         for y in range(16):
@@ -42,21 +28,8 @@ def main(world_path: str):
 
     logger.info('Cleaning up empty chunks')
 
-    region_folders = []
-
-    region_folder = f'{world_path}/region'
-    if os.path.isdir(region_folder):
-        region_folders.append(str(region_folder))
-        
-    try:
-        for namespace in filter(lambda x: os.path.isdir(x), os.listdir(f'{world_path}/dimensions')):
-            namespace_path = f'{world_path}/dimensions/{namespace}'
-
-            for dimension in filter(lambda x: os.path.isdir(x), os.listdir(namespace_path)):
-                dimension_region_path = f'{namespace_path}/{dimension}/region'
-                if os.path.isdir(dimension_region_path):
-                    region_folders.append(str(dimension_region_path))
-    except FileNotFoundError: pass
+    # Moved region folders search to utils
+    region_folders = utils.get_all_region_folders(world_path)
 
     for region_folder_path in region_folders:
         logger.info(f'Working on folder "{region_folder_path}"')

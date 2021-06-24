@@ -1,5 +1,5 @@
 # map-prepare
-Automatically prepare Mineraft map for release.
+Automatically prepare Mineraft map for release. Tested on 1.16 and 1.17. Supposedly works on all 1.13+ versions.
 
 Current state: `kinda works`
 
@@ -14,6 +14,7 @@ Things it currently does:
 - Zip all datapacks
 - Zip and add resourcepack to the world if provided
 - Update pack_format in resourcepack and datapacks
+- (New) Run regex replace pattern on all command blocks
 
 # How to use
 

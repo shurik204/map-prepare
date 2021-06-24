@@ -49,6 +49,10 @@ for module in filter(lambda x: x.endswith('.py'), os.listdir('./map-prepare/modu
     except AttributeError: 
         setattr(modules[-1], '__group__', 'misc')
         logger.warn(f'Module {modules[-1].__name__} doesn\'t specify it\'s group')
+
+    if not (modules[-1].__group__ in config['groups']):
+        logger.warn(f'Module {modules[-1].__name__} specified nonexistent group "{modules[-1].__group__}"')
+
     # Check for priority info
     try: modules[-1].__priority__
     except AttributeError: 
@@ -59,7 +63,7 @@ logger.info(f'Loaded {modules.__len__()} modules')
 
 for group in config['groups']:
     #                      |               Filter by group               |  |    Sort by priority       |
-    group_modules = sorted(filter(lambda x: x.__group__ == group, modules), key=lambda x: x.__priority__)
+    group_modules = sorted(filter(lambda x: x.__group__ == group, modules), key=lambda x: x.__priority__, reverse=True)
     for module in group_modules:
         # Check if there is an object "main" and if it's a function or not
         if hasattr(module, 'main') and callable(module.main):

@@ -106,3 +106,31 @@ def generate_config(world_path: str) -> bool:
         conf['level_dat']['gamerules'].update(config['settings']['level_dat']['gamerules'])
         with open(f'{world_path}-map-prepare.json', 'w+', encoding='utf-8') as config_file:
             config_file.write(ujson.dumps(conf, ensure_ascii=False, indent=2))
+
+def get_all_region_folders(world_path: str) -> List[str]:
+    region_folders = []
+
+    region_folder = f'{world_path}/region'
+    if os.path.isdir(region_folder):
+        region_folders.append(str(region_folder))
+
+    # Don't forget about End and Nether dimensions
+    dim1_folder = f'{world_path}/DIM1'
+    if os.path.isdir(dim1_folder):
+        region_folders.append(str(dim1_folder))
+
+    dim_1_folder = f'{world_path}/DIM-1'
+    if os.path.isdir(dim_1_folder):
+        region_folders.append(str(dim_1_folder))
+        
+    try:
+        for namespace in filter(lambda x: os.path.isdir(x), os.listdir(f'{world_path}/dimensions')):
+            namespace_path = f'{world_path}/dimensions/{namespace}'
+
+            for dimension in filter(lambda x: os.path.isdir(x), os.listdir(namespace_path)):
+                dimension_region_path = f'{namespace_path}/{dimension}/region'
+                if os.path.isdir(dimension_region_path):
+                    region_folders.append(str(dimension_region_path))
+    except FileNotFoundError: pass
+
+    return region_folders

@@ -146,6 +146,20 @@
         "doPatrolSpawning": "false"
       }
     },
+    // Replace commands in command blocks using regex
+    "commands_regex_replace": [
+      // Example regex 1.16 /replaceitem to 1.17 /item
+      // Uncomment to enable it
+      // You can also add multiple regex patterns
+      // (Make sure they won't overlap though)
+      /* {
+           // String to look for
+           "find": "(replace)(item) (entity|block) ((@.\\[.*?\\]|@.)|(.*? .*? .*?)) ([a-z\\.0-9]*)",
+           // String to replace with
+           // Make sure to replace $number with \\number
+           "replace": "\\2 \\1 \\3 \\4 \\7 with"
+      } */
+    ],
     // List of files that will be kept
     // Supports regex. To use it, add filter "re:<regex_pattern>"
     "allowed_files": {

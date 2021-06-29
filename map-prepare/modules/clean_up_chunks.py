@@ -49,6 +49,8 @@ def main(world_path: str):
                 for z in range(32):
                     # Make sure to clear the previous chunk
                     chunk = None
+                    anv_chunk = None
+                    
                     try:
                         chunk = reg.get_nbt(x, z)
                         anv_chunk = anv_reg.get_chunk(x, z)
@@ -56,19 +58,28 @@ def main(world_path: str):
                     except region.InconceivedChunk: pass
                     # Chunk has length of 0: remove it.
                     except region.ChunkHeaderError: reg.unlink_chunk(x, z)
-                    except anvil.chunk.ChunkNotFound: pass
+                    # Added KeyError to prevent crash because TileEntities is missing (ToG is a weird map)
+                    except (anvil.chunk.ChunkNotFound, KeyError): pass
 
-                    if chunk != None:
+                    if chunk != None and anv_chunk != None:
                         empty_chunk = True
 
                         # Assume that it can be 1.17, where entities
                         # were moved into another region-like file
                         no_entites = True
-                        try: no_entites = chunk['Level']['Entities'].tagID == 0
+                        try:
+                            # Pre 1.14 I guess?
+                            if isinstance(chunk['Level']['Entities'], nbt.TAG_Long_Array):
+                                no_entites = chunk['Level']['Entities'].__len__() == 0
+                            else: no_entites = chunk['Level']['Entities'].tagID == 0
                         except KeyError: pass
+                        
 
                         no_sections = True
-                        try: no_sections = chunk['Level']['Sections'].tagID == 0
+                        try:
+                            if isinstance(chunk['Level']['Sections'], nbt.TAG_Long_Array):
+                                no_sections = chunk['Level']['Sections'].__len__() == 0
+                            else: no_sections = chunk['Level']['Sections'].tagID == 0
                         except KeyError: pass
 
                         if not no_sections:

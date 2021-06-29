@@ -3,6 +3,7 @@ __group__ = 'resourcepacks'
 
 from ..lib import utils, logger
 from ..lib.config import config
+import zipfile
 import shutil
 import os
 
@@ -15,6 +16,12 @@ def main(world_path: str):
             if os.path.isdir(config['settings']['resourcepack']):
                 logger.error('Zip archive can\'t be folder.')
                 exit(6)
+            
+            if not zipfile.is_zipfile(config['settings']['resourcepack']):
+                logger.error('Resourcepack is not a valid ZIP archive')
+                exit(7)
+
+            shutil.copyfile(config['settings']['resourcepack'], f'{world_path}/resources.zip')
         else:
             # If it's a folder zip it
             if not utils.is_resourcepack(config['settings']['resourcepack']):

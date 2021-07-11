@@ -1,7 +1,7 @@
 __priority__ = 1
 __group__ = 'datapacks'
 
-from ..lib import logger, utils, cache
+from ..lib import logger, cache
 from ..lib.config import config
 import shutil
 import time

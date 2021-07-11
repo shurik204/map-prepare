@@ -1,0 +1,182 @@
+{
+  // (for world name)
+  "map_name": "Placeholder",
+  // (for world name)
+  "map_author": "Place holder",
+  // Not required, but better use Semantic Versioning.
+  //        Major.Minor.Patch
+  // (for world name)
+  "map_version": "1.0.0",
+  // Resourcepack folder (or zip archive)
+  "resourcepack": "",
+  // Archive all non-archived datapacks
+  "zip_datapacks": true,
+  // Add tag fix datapack to world folder
+  // (Required to disable vanilla datapack)
+  "add_tag_fix_pack": false,
+  // Add no advancements datapack to world folder (You don't need this if you want to disable vanilla datapack)
+  "add_no_advancements_pack": true,
+  // Update pack_format number in resourcepack and all datapacks
+  "update_pack_mcmeta": true,
+  // Should script zip world folder
+  "zip_world": true,
+  // Updates all instances of DataVersion to current version (or spectified in config) value.
+  // NOTE: THIS SCRIPT WILL NOT UPDATE YOUR WORLD TO NEWER VERSION, IT JUST CHANGES ONE NUMBER TO ANOTHER.
+  // THIS SHOULD ONLY BE USED WHEN UPDATING BETWEEN MINOR MINECRAFT VERSIONS. (e.g. 1.16.4 -> 1.16.5)
+  // I DON'T CARE FOR ANY WORLDS YOU SCREW UP THIS WAY. ONLY ENABLE IF YOU KNOW WHAT YOU'RE DOING!
+  "update_data_version": false,
+  // Force set a version. Leave blank to auto-detect from level.dat
+  "version": "",
+  // Force pack_format number for datapacks
+  "pack_format_data": 0,
+  // Force pack_format number for resourcepack    
+  "pack_format_resource": 0,
+  // Force data version value
+  "data_version": 0,
+  // Map folder' name inside the archive
+  "in_archive_name": "$map_name",
+  // Map archive name
+  "archive_name": "$map_name-$map_version",
+  // Script will go through all chunks in the world to remove empty chunks.
+  // (Chunk is considered empty if there are no blocks other than "minecraft:air" and no entities)
+  // (It's also recommended that you remove all unnecessary builds. MCASelector is a good tool for this task)
+  "remove_empty_chunks": true,
+  // Should script look for empty sections
+  "remove_empty_sections": true,
+  // Enable category "level_dat"
+  "modify_level_dat": true,
+  // If modify_level_dat is disabled, non of the values
+  // in this category will not apply
+  "level_dat": {
+    // Disable vanilla datapack
+    // Make sure to enable add_tag_fix_pack
+    // If don't have any datapack with vanilla tags
+    "disable_vanilla_datapack": false,
+    // Default gamemode
+    "game_type": 2,
+    // Remove all tags from player in level.dat
+    "remove_player_tags": true,
+    // Allow cheats or not
+    // 0 - no, 1 - yes
+    "allow_commands": 0,
+    // Change world time (in ticks)
+    // Remove this to prevent changing value
+    "time": 0,
+    // Update all scheduled functions
+    // to trigger in specified tick
+    // Remove this to prevent changing values
+    "schedules_time": 1,
+    // Lock difficulty
+    // 0 - no, 1 - yes
+    "difficulty_locked": 1,
+    // Server brands
+    "brands": [
+      "vanilla"
+    ],
+    // Version string (You can write anything here)
+    // If empty, will be replaced by the current version short name (e.g. 1.17-rc1)
+    "version_name": "",
+    // Why? Idk. Just because.
+    // 0 - no, 1 - yes
+    "was_modded": 0,
+    // Removes stone base in superflat void worlds
+    // (And removes all feature generation, whatever)
+    // 0 - no, 1 - yes
+    "generate_features": 1,
+    // Remove Nether dimension from the level.dat
+    // (If you need Nether make sure to also whitelist DIM-1 folder)
+    // Enabling this will trigger minecraft's "Experimental features" warning
+    "remove_nether": true,
+    // Remove End dimension from the level.dat
+    // (If you need End make sure to also whitelist DIM1 folder)
+    // Enabling this will trigger minecraft's "Experimental features" warning
+    "remove_end": true,
+    // Level name. Supports minecraft color codes.
+    // You can use whatever settings you want from this category
+    // Variable format: $option_name
+    "name": "§3$map_name §7by §6$map_author §7($map_version)",
+    // Format:
+    // Month/Day/Year Hours:Minutes
+    // You can use something like https://www.epochconverter.com/
+    // to convert time between formats
+    // NOTE: Minecraft uses epoch timestapms in milliseconds
+    "last_played": 4102488000000,
+    // Remove "Fabric Mods" datapack
+    // from datapacks list
+    "remove_fabric_datapack": true,
+    // This list will merge with world's gamerules,
+    // overwriting gamerule value if it's present here
+    "gamerules": {
+      "reducedDebugInfo": "true",
+      "disableElytraMovementCheck": "true",
+      "announceAdvancements": "false",
+      "commandBlockOutput": "false",
+      "doMobSpawning": "false",
+      "disableRaids": "true",
+      "doWeatherCycle": "false",
+      "doDaylightCycle": "false",
+      "doInsomnia": "false",
+      "doLimitedCrafting": "true",
+      "randomTickSpeed": 0,
+      "spawnRadius": 0,
+      "doTraderSpawning": "true",
+      "logAdminCommands": "false",
+      "spectatorsGenerateChunks": "false",
+      "sendCommandFeedback": "false",
+      "doPatrolSpawning": "false"
+    }
+  },
+  // Replace commands in command blocks using regex
+  "commands_regex_replace": [
+    // Example regex 1.16 /replaceitem to 1.17 /item
+    // Uncomment to enable it
+    // You can also add multiple regex patterns
+    // (Make sure they won't overlap though)
+    /* {
+      // String to look for
+      "find": "(replace)(item) (entity|block) ((@.\\[.*?\\]|@.)|(.*? .*? .*?)) ([a-z\\.0-9]*)",
+      // String to replace with
+      // Make sure to replace $number with \\number
+      "replace": "\\2 \\1 \\3 \\4 \\7 with"
+      } */
+    ],
+    // List of files that will be kept
+    // Supports regex. To use it, add filter "re:<regex_pattern>"
+    "allowed_files": {
+      // World folder itself
+      "root": [
+        "data",
+        "datapacks",
+        "dimensions",
+        "generated",
+        "entities",
+        "region",
+        "level.dat",
+        "icon.png"
+      ],
+      "data": [
+        "re:command_storage_[a-z,0-9,_]+\\.dat$",
+        "re:map_[0-9]+\\.dat$",
+        "scoreboard.dat",
+      "chunks.dat"
+    ],
+    // Inside every dimension folder
+    "dimension_folder": [
+      "data",
+      "entities",
+      "region"
+    ],
+    "entities": [
+      "re:r\\.[0-9,-]+\\.[0-9,-]+\\.mca"
+    ],
+    "region": [
+      "re:r\\.[0-9,-]+\\.[0-9,-]+\\.mca"
+    ],
+    // Inside all datapack folders (Only unzipped)
+    "datapack_folder": [
+      "pack.mcmeta",
+      "icon.png",
+      "data"
+    ]
+  }
+}

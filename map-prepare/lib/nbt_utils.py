@@ -14,3 +14,11 @@ def get_value_index(tag: nbt.TAG_Compound, value: str) -> int:
     for index, _tag in enumerate(tag.tags):
         if _tag.value == value:
             return index
+
+def sections_exist(chunk: nbt.TAG_Compound):
+    try:
+        chunk['Level']['Sections']
+        return True
+    except (KeyError, AttributeError): pass
+
+    return False

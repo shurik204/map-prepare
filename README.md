@@ -1,13 +1,13 @@
 # map-prepare
 Automatically prepare Mineraft map for release. Tested on 1.16 and 1.17. Supposedly works on all 1.13+ versions.
 
-Current state: `kinda works`
+Current state: `works fine`
 
-**Make sure you have backups for your world before running this program!**
+**Make sure you have backups of your world before running this program!**
 
 Things it currently does:
 - Delete extra files from world like session.lock, playerdata, stats, advancements, DIM-1, DIM1  folders (Including any other files/folders that shouldn't normally be in the world folder)
-- Remove empty chunks from the world. Chunk is considered empty if there are no blocks other than "minecraft:air" and no entities.
+- Remove empty chunks and sections from the world. Chunk or section considered empty if there are no blocks other than "minecraft:air" and no entities.
 - Generate tag fix and no vanilla advancement datapacks for required version. There is also an option to disable vanilla datapack.
 - Change DataVersion int to current (or specified in config) value everywhere it can find (all storages, region files, structures).
 - Set fancy name for the world, switch gamerules, lock difficulty, enable/disable commands in singleplayer
@@ -35,7 +35,7 @@ Open `cmd` in folder where you downloaded program
 ```
 python -m pip install -r requirements.txt
 ```
-#### Linux:
+#### For Linux users:
 ```
 pip3 install -r requirements.txt
 ```
@@ -47,4 +47,4 @@ Before running it make sure you copy your world into the folder with program and
 python -m map-prepare
 ```
 
-A file named `[your_world_folder]-map-prepare.json` should've appeared in the folder. Change settings you need and relaunch the program. All settings are explained in `config.json` file.
+A file named `[your_world_folder]-map-prepare.json` should've appeared in the folder. Change settings you need and relaunch the program.

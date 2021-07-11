@@ -1,8 +1,9 @@
 # Logger first
-from .lib import logger, utils, nbt_utils, cache
+from .lib import logger, nbt_utils, cache
 from .lib.config import config, world_config
 from nbt import nbt
 import importlib
+import shutil
 import time
 import os
 
@@ -13,14 +14,15 @@ import os
 #     shutil.unpack_archive('world.zip')
 ############
 
+if config['debug'] == True: logger.app_log.setLevel(logger.logging.DEBUG)
+
 if not (config['world'] in os.listdir('.')):
     logger.fatal(f'Can\'t find folder "{config["world"]}"')
     exit(4)
 
 if world_config == None:
-# if not ('map-prepare.json' in os.listdir(config['world'])):
-    logger.info('No configuration file found in world folder or in the current directory. Creating it...')
-    utils.generate_config(config['world'])
+    logger.info('No configuration file found in the current directory for this world. Creating it...')
+    shutil.copy('map-prepare/global-settings.json', f'{config["world"]}-map-prepare.json')
     logger.info(f'Review settings in "{config["world"]}-map-prepare.json" and launch this program again.')
     exit(0)
 

@@ -1,12 +1,9 @@
-from .config import config
 from typing import List
 from . import nbt_utils
 from . import logger
 from nbt import nbt
 import zipfile
 import shutil
-import ujson
-import copy
 import os
 import re
 
@@ -95,17 +92,17 @@ def get_gamerules(world_path: str):
         game_rules[game_rule.name] = value
     return game_rules
 
-def generate_config(world_path: str) -> bool:
-    with open(f'{world_path}/map-prepare.json', 'w+', encoding='utf-8') as conf_file:
-        # Copy world prepare config
-        # MAKE SURE TO RECURSIVELY COPY DICT OR IT WILL FUCK ITSELF
-        conf = copy.deepcopy(config['settings'])
-        # Copy gamerules from level.dat
-        conf['level_dat']['gamerules'] = get_gamerules(world_path)
-        # Update them with overrides
-        conf['level_dat']['gamerules'].update(config['settings']['level_dat']['gamerules'])
-        with open(f'{world_path}-map-prepare.json', 'w+', encoding='utf-8') as config_file:
-            config_file.write(ujson.dumps(conf, ensure_ascii=False, indent=2))
+# def generate_config(world_path: str) -> bool:
+#     with open(f'{world_path}/map-prepare.json', 'w+', encoding='utf-8') as conf_file:
+#         # Copy world prepare config
+#         # MAKE SURE TO RECURSIVELY COPY DICT OR IT WILL FUCK ITSELF
+#         conf = copy.deepcopy(config['settings'])
+#         # Copy gamerules from level.dat
+#         conf['level_dat']['gamerules'] = get_gamerules(world_path)
+#         # Update them with overrides
+#         conf['level_dat']['gamerules'].update(config['settings']['level_dat']['gamerules'])
+#         with open(f'{world_path}-map-prepare.json', 'w+', encoding='utf-8') as config_file:
+#             config_file.write(ujson.dumps(conf, ensure_ascii=False, indent=2))
 
 def get_all_region_folders(world_path: str) -> List[str]:
     region_folders = []

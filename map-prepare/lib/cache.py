@@ -1,3 +1,4 @@
+from requests.models import HTTPError
 from . import logger
 import requests
 import zipfile
@@ -58,6 +59,17 @@ class MinecraftVersion(object):
             os.unlink(self.cached_client_path)
             exit(2)
 
+        self.set_language_list()
+
+        # Get default language dictionary
+        try:
+            self.default_lang = None
+            # Get default lang
+            default_lang_str = zipfile.ZipFile(self.cached_client_path).read('assets/minecraft/lang/en_us.json').decode('utf-8')
+            self.default_lang = ujson.loads(default_lang_str)
+        except KeyError:
+            logger.error('Unable to get en_us translation from client.jar')
+
         # Set pack format
         self.set_pack_version()
         
@@ -71,15 +83,26 @@ class MinecraftVersion(object):
         global current_version
         current_version = self
         
+
     def download_client_jar(self):
         if not ('client.jar' in os.listdir(self.version_cache_path)):
             logger.info('Downloading client.jar')
             # Download client.jar
             with requests.get(self.version_data['downloads']['client']['url'], stream=True) as stream:
-                # Raise error if any
-                stream.raise_for_status()
+                try:
+                    # Raise error if any
+                    stream.raise_for_status()
+                except requests.HTTPError:
+                    logger.fatal('Failed to download minecraft client.jar file')
                 with open(self.cached_client_path,'wb+') as client_file:
                     shutil.copyfileobj(stream.raw, client_file)
+
+    def set_language_list(self):
+        logger.info('Updating language list')
+        
+        assets_objects = ujson.loads(requests.get(self.version_data['assetIndex']['url']).text)['objects']
+        self.lang_list = [asset_path[15:] for asset_path in filter(lambda x: x.startswith("minecraft/lang/"), assets_objects.keys())]
+        logger.info(f'Found {self.lang_list.__len__()} languages')
 
     def set_pack_version(self):
         self.pack_version = {"resource": 1, "data": 1}

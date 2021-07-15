@@ -48,6 +48,10 @@ class RegionProcessor(threading.Thread):
         reg = region.RegionFile(fileobj=region_io)
         anv_reg = anvil.Region.from_file(region_path)
 
+        # Empty region
+        new_region_io = io.BytesIO()
+        new_reg = region.RegionFile(fileobj=new_region_io)
+
         logger.info(f'Processing region "{region_path}" with {reg.chunk_count()} chunk{"s" if reg.chunk_count() != 1 else ""}')
         for x in range(32):
             for z in range(32):
@@ -101,6 +105,8 @@ class RegionProcessor(threading.Thread):
                     if empty_chunk and no_entites:
                         # Remove empty chunk
                         reg.unlink_chunk(x, z)
+                    else:
+                        new_reg.write_chunk(x, z, chunk)
 
         # Check if there is anything left
         # If region is empty:
@@ -113,9 +119,9 @@ class RegionProcessor(threading.Thread):
             # Write changes to file
             with open(region_path, 'wb') as region_file:
                 # Make sure to seek to the beginning of the BytesIO
-                region_io.seek(0)
+                new_region_io.seek(0)
                 # And then write data to disk
-                region_file.write(region_io.read())
+                region_file.write(new_region_io.read())
 
         self.queue.task_done()
 

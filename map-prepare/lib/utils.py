@@ -9,8 +9,7 @@ import re
 
 def is_folder(path: str) -> bool:
     try: 
-        open(path, 'rb')
-        return False
+        return os.path.isdir(path)
     except (IsADirectoryError, FileNotFoundError): return True
 
 def is_datapack(path: str) -> bool:

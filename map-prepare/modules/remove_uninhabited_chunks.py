@@ -1,4 +1,4 @@
-__priority__ = 97
+__priority__ = 99
 __group__ = 'regions'
 
 from ..lib import logger, utils, nbt_utils

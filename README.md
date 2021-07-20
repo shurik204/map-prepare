@@ -8,13 +8,14 @@ Current state: `works fine`
 Things it currently does:
 - Delete extra files from world like session.lock, playerdata, stats, advancements, DIM-1, DIM1  folders (Including any other files/folders that shouldn't normally be in the world folder)
 - Remove empty chunks and sections from the world. Chunk or section considered empty if there are no blocks other than "minecraft:air" and no entities.
+- (New) Remove chunks by InhabitedTime value.
 - Generate tag fix and no vanilla advancement datapacks for required version. There is also an option to disable vanilla datapack.
-- Change DataVersion int to current (or specified in config) value everywhere it can find (all storages, region files, structures).
+- Change DataVersion value to current (or specified in config) value everywhere it can find (all storages, region files, structures).
 - Set fancy name for the world, switch gamerules, lock difficulty, enable/disable commands in singleplayer
 - Zip all datapacks
 - Zip and add resourcepack to the world if provided
 - Update pack_format in resourcepack and datapacks
-- (New) Run regex replace pattern on all command blocks
+- Run regex replace pattern on all command blocks
 
 # How to use
 

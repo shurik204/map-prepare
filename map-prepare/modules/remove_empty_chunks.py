@@ -1,4 +1,4 @@
-__priority__ = 98
+__priority__ = 97
 __group__ = 'regions'
 
 from ..lib import logger, utils

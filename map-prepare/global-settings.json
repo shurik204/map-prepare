@@ -35,7 +35,7 @@
   "data_version": 0,
   // If value below is higher than InhavitedTime in chunk, it will be removed.
   // Set to -1 to disable this feature
-  "min_inhabited_time": 0,
+  "min_inhabited_time": -1,
   // Map folder' name inside the archive
   "in_archive_name": "$map_name",
   // Map archive name

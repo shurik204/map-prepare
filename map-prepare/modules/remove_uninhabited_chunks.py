@@ -1,4 +1,4 @@
-__priority__ = 99
+__priority__ = 97
 __group__ = 'regions'
 
 from ..lib import logger, utils, nbt_utils
@@ -8,12 +8,6 @@ import threading
 import queue
 import io
 import os
-
-def blocks_exist(section: nbt.TAG_Compound):
-    try:
-        section['BlockStates']
-        return True
-    except KeyError: return False
 
 class RegionProcessor(threading.Thread):
     def __init__(self, queue: queue.Queue):
@@ -47,7 +41,6 @@ class RegionProcessor(threading.Thread):
             for z in range(32):
                 # Make sure to clear the previous chunk
                 chunk = None
-                chunk_modified = False
                 
                 try:
                     chunk = reg.get_nbt(x, z)
@@ -59,23 +52,11 @@ class RegionProcessor(threading.Thread):
                 except KeyError: pass
 
                 if chunk != None:
-                    if nbt_utils.sections_exist(chunk):
-                        # Chunks are stored in 16x16x16 sections from 0 to 15.
-                        # Go in reverse so I can modify the list
-                        # i'm iterating through
-                        for section_index in range(chunk['Level']['Sections'].__len__()-1,0,-1):
-                            # If there is no BlockStates tag
-                            if not blocks_exist(chunk['Level']['Sections'][section_index]):
-                                logger.debug(f'Removed section {chunk["Level"]["Sections"][section_index]["Y"]} from chunk ({x}, {z})')
-                                # Remove ir
-                                del chunk["Level"]["Sections"][section_index]
-                                chunk_modified = True
-
-                        if chunk['Level']['Sections'].__len__() == 0:
-                            # Remove empty chunk
-                            reg.unlink_chunk(x, z)
-                        elif chunk_modified:
-                            new_reg.write_chunk(x,z,chunk)
+                    if chunk['Level']['InhabitedTime'].value >= config['settings']['min_inhabited_time']:
+                        # Keep chunk if it meets requirement
+                        new_reg.write_chunk(x,z,chunk)
+                    else:
+                        logger.debug(f'Removed chunk ({x}, {z}) because InhabitedTime {chunk["Level"]["InhabitedTime"].value} < {config["settings"]["min_inhabited_time"]}')
 
         # Check if there is anything left
         # If region is empty:
@@ -96,18 +77,17 @@ class RegionProcessor(threading.Thread):
 
 
 def main(world_path: str):
-    if not config['settings']['remove_empty_sections']:
+    if config['settings']['min_inhabited_time'] <= -1:
         return
 
     q = queue.Queue()
 
-    logger.info('Removing empty sections')
+    logger.info(f'Removing chunks with InhabitedTime less or equal to {config["settings"]["min_inhabited_time"]}')
 
     # Moved region folders search to utils
     region_folders = utils.get_all_region_folders(world_path)
     
     for region_folder_path in region_folders:
-        # logger.info(f'Processing folder "{region_folder_path}"')
 
         for region_name in os.listdir(region_folder_path):
             # Construct path to region file

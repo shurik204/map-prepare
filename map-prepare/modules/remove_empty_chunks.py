@@ -110,7 +110,7 @@ class RegionProcessor(threading.Thread):
 
         # Check if there is anything left
         # If region is empty:
-        if reg.chunk_count() == 0:
+        if new_reg.chunk_count() == 0:
             logger.debug(f'Deleted empty region file "{region_path}"')
             # Just remove the file
             utils.delete_file(region_path)

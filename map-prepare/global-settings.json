@@ -29,10 +29,13 @@
   "version": "",
   // Force pack_format number for datapacks
   "pack_format_data": 0,
-  // Force pack_format number for resourcepack    
+  // Force pack_format number for resourcepack
   "pack_format_resource": 0,
   // Force data version value
   "data_version": 0,
+  // If value below is higher than InhavitedTime in chunk, it will be removed.
+  // Set to -1 to disable this feature
+  "min_inhabited_time": 0,
   // Map folder' name inside the archive
   "in_archive_name": "$map_name",
   // Map archive name

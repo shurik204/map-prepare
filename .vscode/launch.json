@@ -16,6 +16,13 @@
             "type": "python",
             "request": "launch",
             "module": "map-prepare"
+        },
+        {
+            "name": "Python: Debug Module",
+            "type": "python",
+            "request": "launch",
+            "module": "map-prepare",
+            "args": ["--debug", "--one-thread"]
         }
     ]
 }

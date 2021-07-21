@@ -17,8 +17,8 @@ try:
     if config['threads'] <= 0: config['threads'] = os.sched_getaffinity(0).__len__()
 # If file is not there
 except (FileNotFoundError, IndexError): logger.info('Using default config')
-except (ValueError, IsADirectoryError):
-    logger.fatal(f'File "{world_config}" is corrupt. Fix or remove it and restart script.')
+except (ValueError, IsADirectoryError) as e:
+    logger.fatal(f'File "{world_config}" is corrupt. Reason: "{e}". Fix or remove it and restart the script.')
     exit(0)
 
 # Remove all unnessesary things

@@ -111,11 +111,11 @@ def get_all_region_folders(world_path: str) -> List[str]:
         region_folders.append(str(region_folder))
 
     # Don't forget about End and Nether dimensions
-    dim1_folder = f'{world_path}/DIM1'
+    dim1_folder = f'{world_path}/DIM1/region'
     if os.path.isdir(dim1_folder):
         region_folders.append(str(dim1_folder))
 
-    dim_1_folder = f'{world_path}/DIM-1'
+    dim_1_folder = f'{world_path}/DIM-1/region'
     if os.path.isdir(dim_1_folder):
         region_folders.append(str(dim_1_folder))
         

@@ -1,6 +1,7 @@
 # Logger first
 from .lib import logger, nbt_utils, cache
 from .lib.config import config, world_config
+from sys import argv
 from nbt import nbt
 import importlib
 import shutil
@@ -13,6 +14,13 @@ import os
 #     shutil.rmtree(config['world'], ignore_errors=True)
 #     shutil.unpack_archive('world.zip')
 ############
+if argv.count('--debug') != 0: 
+    logger.info('Forcefully enabled debug output. Spam incoming...')
+    config['debug'] = True
+
+if argv.count('--one-thread') != 0: 
+    logger.info('Using one thread')
+    config['threads'] = 1
 
 if config['debug'] == True: logger.app_log.setLevel(logger.logging.DEBUG)
 

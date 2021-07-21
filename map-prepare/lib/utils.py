@@ -54,7 +54,7 @@ def is_resourcepack(path: str) -> bool:
             except KeyError: return False
         else: return False
 
-def allowed_file(filename: str, allowed_files: List[str]) -> bool:
+def matches_filter(filename: str, allowed_files: List[str]) -> bool:
     """Returns True if one of the filters in allowed_files is True"""
     for entry in allowed_files:
         if entry.startswith('re:'):
@@ -76,9 +76,6 @@ def delete_file(path: str) -> bool:
     
     return True
 
-# def file_exists(filename: str, folder_path: str):
-    # if (filename in os.listdir(folder_path)) and not is_folder(f'{folder_path}/{filename}'): return True
-
 def get_gamerules(world_path: str):
     level_dat = nbt.NBTFile(filename=f'{world_path}/level.dat')
     game_rules = {}
@@ -90,18 +87,6 @@ def get_gamerules(world_path: str):
         # Write game rule to others
         game_rules[game_rule.name] = value
     return game_rules
-
-# def generate_config(world_path: str) -> bool:
-#     with open(f'{world_path}/map-prepare.json', 'w+', encoding='utf-8') as conf_file:
-#         # Copy world prepare config
-#         # MAKE SURE TO RECURSIVELY COPY DICT OR IT WILL FUCK ITSELF
-#         conf = copy.deepcopy(config['settings'])
-#         # Copy gamerules from level.dat
-#         conf['level_dat']['gamerules'] = get_gamerules(world_path)
-#         # Update them with overrides
-#         conf['level_dat']['gamerules'].update(config['settings']['level_dat']['gamerules'])
-#         with open(f'{world_path}-map-prepare.json', 'w+', encoding='utf-8') as config_file:
-#             config_file.write(ujson.dumps(conf, ensure_ascii=False, indent=2))
 
 def get_all_region_folders(world_path: str) -> List[str]:
     region_folders = []

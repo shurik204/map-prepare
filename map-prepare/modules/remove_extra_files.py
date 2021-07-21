@@ -15,7 +15,7 @@ def main(world_path: str):
         # shutil.move(f'{world_path}/{world_config}', f'./{world_path}-map-prepare.json')
 
     for file in os.listdir(world_path):
-        if not utils.allowed_file(file, config['settings']['allowed_files']['root']):
+        if not utils.matches_filter(file, config['settings']['allowed_files']['root']):
             # Construct a file path
             file_path = f'{world_path}/{file}'
             # Delete file whatever type it is. (Actially file or folder)
@@ -37,7 +37,7 @@ def main(world_path: str):
                 datapack_path = f'{world_path}/datapacks/{datapack_folder}'
                 if utils.is_folder(datapack_path):
                     for file in os.listdir(datapack_path):
-                        if not utils.allowed_file(file, config['settings']['allowed_files']['datapack_folder']):
+                        if not utils.matches_filter(file, config['settings']['allowed_files']['datapack_folder']):
                             # Construct file path
                             file_path = f'{datapack_path}/{file}'
 
@@ -55,7 +55,7 @@ def main(world_path: str):
         # For file in folder
         for filename in os.listdir(folder):
             # Check if this file belongs here
-            if not utils.allowed_file(filename, config['settings']['allowed_files'][folder_name]):
+            if not utils.matches_filter(filename, config['settings']['allowed_files'][folder_name]):
                 # Contruct path to file
                 file = f'{folder}/{filename}'
                 # Remove it if it doesn't
@@ -69,7 +69,7 @@ def main(world_path: str):
                 dimension_path = f'{namespace_path}/{dimension}'
 
                 for file in os.listdir(dimension_path):
-                    if not utils.allowed_file(file, config['settings']['allowed_files']['dimension_folder']):
+                    if not utils.matches_filter(file, config['settings']['allowed_files']['dimension_folder']):
                         # Construct file path
                         file_path = f'{dimension_path}/{file}'
 
@@ -79,7 +79,7 @@ def main(world_path: str):
     # Nether
     try:
         for file in os.listdir(f'{world_path}/DIM-1'):
-            if not utils.allowed_file(file, config['settings']['allowed_files']['dimension_folder']):
+            if not utils.matches_filter(file, config['settings']['allowed_files']['dimension_folder']):
                 # Construct file path
                 file_path = f'{world_path}/DIM-1/{file}'
 
@@ -89,7 +89,7 @@ def main(world_path: str):
     # End
     try:
         for file in os.listdir(f'{world_path}/DIM1'):
-            if not utils.allowed_file(file, config['settings']['allowed_files']['dimension_folder']):
+            if not utils.matches_filter(file, config['settings']['allowed_files']['dimension_folder']):
                 # Construct file path
                 file_path = f'{world_path}/DIM1/{file}'
 

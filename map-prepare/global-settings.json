@@ -142,29 +142,39 @@
       // Make sure to replace $number with \\number
       "replace": "\\2 \\1 \\3 \\4 \\7 with"
       } */
+  ],
+  // Remove empty files with following extension
+  "remove_empty_files": [
+    "mca"
+  ],
+  // Program will look through all folders looking
+  // for this filename and delete if found
+  // (Supports regex "re:<regex_pattern>")
+  "global_unwanted_files": [
+    ".DS_Store"
+  ],
+  // List of files that will be kept
+  // Supports regex. To use it, add filter "re:<regex_pattern>"
+  "allowed_files": {
+    // World folder itself
+    "root": [
+      "data",
+      "datapacks",
+      "dimensions",
+      // Uncomment line below if you want to also save Nether dimension
+      // "DIM-1",
+      // Uncomment line below if you want to also save End dimension
+      // "DIM1",
+      "generated",
+      "entities",
+      "region",
+      "level.dat",
+      "icon.png"
     ],
-    // Remove empty files with following extension
-    "remove_empty_files": [
-        "mca"
-    ],
-    // List of files that will be kept
-    // Supports regex. To use it, add filter "re:<regex_pattern>"
-    "allowed_files": {
-      // World folder itself
-      "root": [
-        "data",
-        "datapacks",
-        "dimensions",
-        "generated",
-        "entities",
-        "region",
-        "level.dat",
-        "icon.png"
-      ],
-      "data": [
-        "re:command_storage_[a-z,0-9,_]+\\.dat$",
-        "re:map_[0-9]+\\.dat$",
-        "scoreboard.dat",
+    "data": [
+      "re:command_storage_[a-z,0-9,_]+\\.dat$",
+      "re:map_[0-9]+\\.dat$",
+      "scoreboard.dat",
       "chunks.dat"
     ],
     // Inside every dimension folder

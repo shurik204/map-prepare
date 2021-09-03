@@ -5,6 +5,7 @@ from ..lib import utils, nbt_utils, logger, cache
 from ..lib.config import config
 from nbt import nbt
 import string
+import copy
 
 def add_datapack(datapack_name: str, state: str='Enabled'):
     global level_dat
@@ -149,16 +150,35 @@ def main(world_path: str):
                 level_dat['Version']['Name'].value = cache.current_version.version
     except KeyError: pass
 
+    # Gamerules
     try:
-        # Create list of new gamerules
-        new_gamerules = nbt.TAG_List()
+        gamerules = level_dat['GameRules']
+        gamerules_list = [x.name for x in level_dat['GameRules'].tags]
         for gamerule, value in settings['level_dat']['gamerules'].items():
-            # Type check
-            if type(value) == str: new_gamerules.append(nbt.TAG_String(value=value, name=gamerule))
-            elif type(value) == int: new_gamerules.append(nbt.TAG_Int(value=value, name=gamerule))
-        # Apply new gamerules
-        level_dat['GameRules'].tags = new_gamerules.tags
+            if gamerule in gamerules_list:
+                # Convert bools to string
+                if isinstance(value, bool):
+                    if value == True: value = 'true'
+                    if value == False: value = 'false'
+                
+                # Try to convert to int
+                # try: value = str(value)
+                # except ValueError: pass
+                # Write updated value
+                gamerules[gamerule].value = copy.copy(str(value))
+
     except KeyError: pass
+
+    # try:
+    #     # Create list of new gamerules
+    #     new_gamerules = nbt.TAG_List()
+    #     for gamerule, value in settings['level_dat']['gamerules'].items():
+    #         # Type check
+    #         if type(value) == str: new_gamerules.append(nbt.TAG_String(value=value, name=gamerule))
+    #         elif type(value) == int: new_gamerules.append(nbt.TAG_Int(value=value, name=gamerule))
+    #     # Apply new gamerules
+    #     level_dat['GameRules'].tags = new_gamerules.tags
+    # except KeyError: pass
 
     # Save changes
     utils.delete_file(f'{config["world"]}/level.dat')

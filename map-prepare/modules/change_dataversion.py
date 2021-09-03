@@ -45,8 +45,8 @@ def main(world_path: str):
 
                 reg = region.RegionFile(fileobj=reg_io)
                 for x in range(32):
-                    for z in range(32):             # Make sure to clear the previous chunk
-                        chunk = None
+                    for z in range(32):
+                        chunk = None # Make sure to clear the previous chunk
                         try:
                             chunk = reg.get_nbt(x, z)
                         # No chunk: just skip

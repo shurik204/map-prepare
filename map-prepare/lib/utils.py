@@ -1,5 +1,4 @@
 from typing import List
-from . import nbt_utils
 from . import logger
 from nbt import nbt
 import zipfile
@@ -79,7 +78,8 @@ def delete_file(path: str) -> bool:
 def get_gamerules(world_path: str):
     level_dat = nbt.NBTFile(filename=f'{world_path}/level.dat')
     game_rules = {}
-    for game_rule in nbt_utils.get_property(nbt_utils.get_property(level_dat, 'Data'), 'GameRules').tags:
+    
+    for game_rule in level_dat['Data']['GameRules'].tags:
         value = game_rule.value
         # Try converting value to int
         try: value = int(value)
@@ -105,10 +105,10 @@ def get_all_region_folders(world_path: str) -> List[str]:
         region_folders.append(str(dim_1_folder))
         
     try:
-        for namespace in filter(lambda x: os.path.isdir(x), os.listdir(f'{world_path}/dimensions')):
+        for namespace in filter(lambda x: os.path.isdir(f'{world_path}/dimensions/{x}'), os.listdir(f'{world_path}/dimensions')):
             namespace_path = f'{world_path}/dimensions/{namespace}'
 
-            for dimension in filter(lambda x: os.path.isdir(x), os.listdir(namespace_path)):
+            for dimension in filter(lambda x: os.path.isdir(f'{namespace_path}/{x}'), os.listdir(namespace_path)):
                 dimension_region_path = f'{namespace_path}/{dimension}/region'
                 if os.path.isdir(dimension_region_path):
                     region_folders.append(str(dimension_region_path))

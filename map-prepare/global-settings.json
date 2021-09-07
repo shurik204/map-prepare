@@ -89,11 +89,11 @@
     // Remove Nether dimension from the level.dat
     // (If you need Nether make sure to also whitelist DIM-1 folder)
     // Enabling this will trigger minecraft's "Experimental features" warning
-    "remove_nether": true,
+    "remove_nether": false,
     // Remove End dimension from the level.dat
     // (If you need End make sure to also whitelist DIM1 folder)
     // Enabling this will trigger minecraft's "Experimental features" warning
-    "remove_end": true,
+    "remove_end": false,
     // Level name. Supports minecraft color codes.
     // You can use whatever settings you want from this category
     // Variable format: $option_name
@@ -122,7 +122,7 @@
       "doLimitedCrafting": "true",
       "randomTickSpeed": 0,
       "spawnRadius": 0,
-      "doTraderSpawning": "true",
+      "doTraderSpawning": "false",
       "logAdminCommands": "false",
       "spectatorsGenerateChunks": "false",
       "sendCommandFeedback": "false",

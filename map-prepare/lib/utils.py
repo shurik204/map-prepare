@@ -19,18 +19,22 @@ def is_datapack(path: str) -> bool:
             return True
         else: 
             return False
-    else:
         # If not, check if file is a zip archive
-        if path.endswith('.zip') and zipfile.is_zipfile(path):
-            try:
-                archive = zipfile.ZipFile(path, mode='r')
-                # Look for pack.mcmeta file if it is an archive
-                archive.open('pack.mcmeta','r')
-                archive.getinfo('data/')
-                # If files are present, assume it's a datapack
-                return True
-            except KeyError: return False
-        else: return False
+    elif path.endswith('.zip') and zipfile.is_zipfile(path):
+        try:
+            archive = zipfile.ZipFile(path, mode='r')
+            # Look for pack.mcmeta file in the archive
+            archive.open('pack.mcmeta','r')
+            
+            for file in archive.filelist:
+                if re.match("^data\/([a-z,0-9,_,-]+\/)?$", file.filename) != None:
+                    # If there is at least one namespace, assume it's a datapack
+                    return True
+
+            # If it didn't return, it's not a datapack
+            return False
+        except KeyError: return False
+    else: return False
 
 def is_resourcepack(path: str) -> bool:
     # If a folder

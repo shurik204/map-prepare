@@ -96,4 +96,3 @@ for group in config['groups']:
             module.main(config['world'])
         else:
             logger.error(f'Module {module.__file__} doesn\'t contain main() function! Skipping it.')
-            

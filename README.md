@@ -1,7 +1,7 @@
 # map-prepare
 Automatically prepare Mineraft map for release. Tested on 1.16 and 1.17. Supposedly works on all 1.13+ versions.
 
-Current state: `works fine`
+Current state: ![state: works fine](https://img.shields.io/badge/works%20fine-green)
 
 **Make sure you have backups of your world before running this program!**
 

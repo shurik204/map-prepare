@@ -44,12 +44,12 @@ jobs:
             ASSET_MIME: application/zip
           - os: windows-latest
             TARGET: windows
-            CMD_BUILD: pyinstaller --clean --hidden-import nbt.world --hidden-import map_prepare.lib.logger --hidden-import anvil --hidden-import zipfile --hidden-import map_prepare.lib.utils --hidden-import map_prepare.lib.in_memory_zipfile --add-data "map_prepare/global-settings.json:map_prepare" --add-data "map_prepare/default-config.json:map_prepare" --add-data "map_prepare/modules:map_prepare/modules" -F -n map_prepare map_prepare/__main__.py &&
+            CMD_BUILD: pyinstaller --clean --hidden-import nbt.world --hidden-import map_prepare.lib.logger --hidden-import anvil --hidden-import zipfile --hidden-import map_prepare.lib.utils --hidden-import map_prepare.lib.in_memory_zipfile --add-data "map_prepare/global-settings.json:map_prepare" --add-data "map_prepare/default-config.json:map_prepare" --add-data "map_prepare/modules:map_prepare/modules" -F -n map_prepare map_prepare/__main__.py
             OUT_FILE_NAME: map_prepare.exe
             ASSET_MIME: application/vnd.microsoft.portable-executable
           - os: ubuntu-latest
             TARGET: x86_64-linux-gnu
-            CMD_BUILD: pyinstaller --clean --hidden-import nbt.world --hidden-import map_prepare.lib.logger --hidden-import anvil --hidden-import zipfile --hidden-import map_prepare.lib.utils --hidden-import map_prepare.lib.in_memory_zipfile --add-data "map_prepare/global-settings.json:map_prepare" --add-data "map_prepare/default-config.json:map_prepare" --add-data "map_prepare/modules:map_prepare/modules" -F -n map_prepare map_prepare/__main__.py &&
+            CMD_BUILD: pyinstaller --clean --hidden-import nbt.world --hidden-import map_prepare.lib.logger --hidden-import anvil --hidden-import zipfile --hidden-import map_prepare.lib.utils --hidden-import map_prepare.lib.in_memory_zipfile --add-data "map_prepare/global-settings.json:map_prepare" --add-data "map_prepare/default-config.json:map_prepare" --add-data "map_prepare/modules:map_prepare/modules" -F -n map_prepare map_prepare/__main__.py
             OUT_FILE_NAME: map_prepare
             ASSET_MIME: application/octet-stream
     steps:

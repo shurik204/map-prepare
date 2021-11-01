@@ -50,7 +50,7 @@ jobs:
           - os: ubuntu-latest
             TARGET: x86_64-linux-gnu
             CMD_BUILD: pyinstaller --clean --hidden-import nbt.world --hidden-import map_prepare.lib.logger --hidden-import anvil --hidden-import zipfile --hidden-import map_prepare.lib.utils --hidden-import map_prepare.lib.in_memory_zipfile --add-data "map_prepare/global-settings.json:map_prepare" --add-data "map_prepare/default-config.json:map_prepare" --add-data "map_prepare/modules:map_prepare/modules" -F -n map_prepare map_prepare/__main__.py
-            OUT_FILE_NAME: map_prepare.exe
+            OUT_FILE_NAME: map_prepare
             ASSET_MIME: application/octet-stream
     steps:
     - uses: actions/checkout@v1
@@ -61,7 +61,9 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
+        python -m pip install -r requirements.txt
+    - name: Install pyinstaller
+      run: python -m pip install pyinstaller
     - name: Build with pyinstaller for ${{matrix.TARGET}}
       run: ${{matrix.CMD_BUILD}}
     - name: Load Release URL File from release job

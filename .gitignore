@@ -24,4 +24,4 @@ world/
 *.spec
 dist/
 build/
-.vscode/
+.vscode/settings.json

@@ -1,9 +1,9 @@
 __priority__ = 0
 __group__ = 'final'
 
-from ..lib.in_memory_zipfile import InMemoryZipFile
-from ..lib.config import config
-from ..lib import logger
+from map_prepare.lib.in_memory_zipfile import InMemoryZipFile
+from map_prepare.lib.config import config
+from map_prepare.lib import logger
 import string
 import os
 

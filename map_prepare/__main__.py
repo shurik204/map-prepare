@@ -1,4 +1,4 @@
 try:
-    from . import main
+    from map_prepare import main
 except KeyboardInterrupt:
     print('Aborted.')

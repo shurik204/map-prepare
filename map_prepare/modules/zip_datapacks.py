@@ -1,8 +1,8 @@
 __priority__ = 0
 __group__ = 'datapacks'
 
-from ..lib.config import config
-from ..lib import utils, logger
+from map_prepare.lib.config import config
+from map_prepare.lib import utils, logger
 import shutil
 import os
 

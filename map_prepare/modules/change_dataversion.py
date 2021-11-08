@@ -1,8 +1,8 @@
 __priority__ = 0
 __group__ = 'misc'
 
-from ..lib import cache, utils, logger
-from ..lib.config import config
+from map_prepare.lib import cache, utils, logger
+from map_prepare.lib.config import config
 from nbt import nbt, region
 import io
 import os

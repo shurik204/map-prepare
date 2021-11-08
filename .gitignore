@@ -20,3 +20,8 @@ cache/
 world/
 # Test world config
 *-map-prepare.json
+
+*.spec
+dist/
+build/
+.vscode/settings.json

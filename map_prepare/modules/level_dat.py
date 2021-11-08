@@ -1,8 +1,8 @@
 __priority__ = 0
 __group__ = "level_dat"
 
-from ..lib import utils, nbt_utils, logger, cache
-from ..lib.config import config
+from map_prepare.lib import utils, nbt_utils, logger, cache
+from map_prepare.lib.config import config
 from nbt import nbt
 import string
 import copy

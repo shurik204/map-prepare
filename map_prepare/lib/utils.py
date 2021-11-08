@@ -1,5 +1,5 @@
 from typing import List
-from . import logger
+from map_prepare.lib import logger
 from nbt import nbt
 import zipfile
 import shutil

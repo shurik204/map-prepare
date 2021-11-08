@@ -1,8 +1,8 @@
 __priority__ = 0
 __group__ = 'regions'
 
-from ..lib.config import config
-from ..lib import logger, utils
+from map_prepare.lib.config import config
+from map_prepare.lib import logger, utils
 from nbt import nbt, region
 import io
 import os

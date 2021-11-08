@@ -1,7 +1,7 @@
 # map-prepare
 Automatically prepare Mineraft map for release. Tested on 1.16 and 1.17. Supposedly works on all 1.13+ versions.
 
-Current state: `works fine`
+Current state: ![state: works fine](https://img.shields.io/badge/works%20fine-green)
 
 **Make sure you have backups of your world before running this program!**
 
@@ -19,18 +19,31 @@ Things it currently does:
 
 # How to use
 
-To run this you need:
-- Python 3.8+ (https://www.python.org/downloads/)
-- A few Python libraries
+## Download
 
-### Download
+![Windows](https://img.shields.io/badge/Windows-green) **[Download](https://github.com/shurik204/map-prepare/releases/latest/download/map-prepare-win.exe)**
+
+![Linux](https://img.shields.io/badge/Linux-orange) **[Download](https://github.com/shurik204/map-prepare/releases/latest/download/map-prepare-linux)**
+
+![MacOS](https://img.shields.io/badge/MacOS-%23919191) **[Download](https://github.com/shurik204/map-prepare/releases/latest/download/map-prepare-macos)**
+
+Move it to some folder along with the world you're gonna use it on and run it for the first time.
+If your world folder isn't named `world`, change the folder name in `config.json` and run it again.
+
+A file named `[your_world_folder]-map-prepare.json` should've appeared in the folder. Change settings you need and relaunch the program.
+
+
+
+#
+## Alterantive (old) download
+### Get source code
 ```
 git clone https://github.com/shurik204/map-prepare.git
 ```
-or get ZIP archive
-**[\[Here\]](https://github.com/shurik204/map-prepare/archive/refs/heads/master.zip)**
+or in a ZIP archive
+**[\[here\]](https://github.com/shurik204/map-prepare/archive/refs/heads/master.zip)**
 
-Open `cmd` in folder where you downloaded program
+Open `cmd` in folder where you downloaded program (`bash` or whatever shell you have on linux or macos)
 
 ### Install dependencies
 ```

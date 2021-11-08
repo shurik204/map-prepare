@@ -1,9 +1,9 @@
 __priority__ = 0
 __group__ = 'misc'
 
-from ..lib.in_memory_zipfile import InMemoryZipFile
-from ..lib import logger, cache, utils
-from ..lib.config import config
+from map_prepare.lib.in_memory_zipfile import InMemoryZipFile
+from map_prepare.lib import logger, cache, utils
+from map_prepare.lib.config import config
 import zipfile
 import ujson
 import os

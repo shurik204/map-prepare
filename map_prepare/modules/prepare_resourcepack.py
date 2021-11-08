@@ -1,8 +1,9 @@
 __priority__ = 0
 __group__ = 'resourcepacks'
 
-from ..lib import utils, logger
-from ..lib.config import config
+from map_prepare.lib import utils, logger
+from map_prepare.lib.config import config
+from sys import exit
 import zipfile
 import shutil
 import os

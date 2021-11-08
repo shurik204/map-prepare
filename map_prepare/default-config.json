@@ -1,0 +1,23 @@
+{
+  // Don't change this
+  // unless you want to add your module,
+  // but don't see any group that fits
+  "groups": [
+    "global",
+    "regions",
+    "level_dat",
+    "datapacks",
+    "resourcepacks",
+    "data_storage",
+    "maps",
+    "misc",
+    "final"
+  ],
+  // World folder
+  "world": "world",
+  // How many threads modules can use at most.
+  // Zero means # of CPU cores available.
+  "threads": 4,
+  // Enable debug output
+  "debug": false
+}

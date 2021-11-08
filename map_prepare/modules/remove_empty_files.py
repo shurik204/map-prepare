@@ -1,8 +1,8 @@
 __priority__ = 98
 __group__ = 'global'
 
-from ..lib import utils, logger
-from ..lib.config import config
+from map_prepare.lib import utils, logger
+from map_prepare.lib.config import config
 import os
 
 

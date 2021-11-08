@@ -1,11 +1,12 @@
 # Logger first
-from .lib import logger, nbt_utils, cache
-from .lib.config import config, world_config
-from sys import argv
+from map_prepare.lib import logger, nbt_utils, cache
+from map_prepare.lib.config import config, world_config
+from sys import argv, exit
 from nbt import nbt
 import importlib
 import shutil
 import time
+import sys
 import os
 
 ##########
@@ -30,7 +31,14 @@ if not (config['world'] in os.listdir('.')):
 
 if world_config == None:
     logger.info('No configuration file found in the current directory for this world. Creating it...')
-    shutil.copy('map-prepare/global-settings.json', f'{config["world"]}-map-prepare.json')
+
+    # Support for pyinstaller
+    if getattr(sys, 'frozen', False):
+        default_settings = os.path.join(sys._MEIPASS, 'map_prepare/global-settings.json')
+    else:
+        default_settings = 'map_prepare/global-settings.json'
+
+    shutil.copy(default_settings, f'{config["world"]}-map-prepare.json')
     logger.info(f'Review settings in "{config["world"]}-map-prepare.json" and launch this program again.')
     exit(0)
 
@@ -50,10 +58,18 @@ cache.MinecraftVersion(version_name)
 
 # Only load modules if there is a config file
 modules = []
+
+# Support for pyinstaller
+if getattr(sys, 'frozen', False):
+    modules_folder = os.path.join(sys._MEIPASS, 'map_prepare/modules')
+else:
+    modules_folder = 'map_prepare/modules'
+# from time import sleep
+# sleep(1000)
 # Split modules into groups
-for module in filter(lambda x: x.endswith('.py'), os.listdir('./map-prepare/modules')):
+for module in filter(lambda x: x.endswith('.py'), os.listdir(modules_folder)):
     module = '.'.join(module.split('.')[:-1])
-    modules.append(importlib.import_module(f'.modules.{module}', 'map-prepare'))
+    modules.append(importlib.import_module(f'.modules.{module}', 'map_prepare'))
     # Check for group info
     try: modules[-1].__group__
     except AttributeError: 

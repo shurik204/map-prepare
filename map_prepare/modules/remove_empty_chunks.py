@@ -1,8 +1,8 @@
 __priority__ = 97
 __group__ = 'regions'
 
-from ..lib import logger, utils
-from ..lib.config import config
+from map_prepare.lib import logger, utils
+from map_prepare.lib.config import config
 from nbt import nbt, region
 import threading
 import anvil

@@ -8,6 +8,12 @@ import os
 
 def main(world_path):
     if config['settings']['zip_datapacks']:
+
+        # Fix issue #1
+        if not utils.is_folder(f'{world_path}/datapacks'):
+            logger.error('No datapacks folder found')
+            return
+
         logger.info('Archiving datapacks')
         #               |              Only select folders             |
         for datapack in filter(lambda x: utils.is_folder(f'{world_path}/datapacks/{x}'), os.listdir(f'{world_path}/datapacks')):

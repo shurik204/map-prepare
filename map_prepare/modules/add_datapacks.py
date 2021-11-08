@@ -1,13 +1,18 @@
 __priority__ = 1
 __group__ = 'datapacks'
 
-from map_prepare.lib import logger, cache
+from map_prepare.lib import logger, cache, utils
 from map_prepare.lib.config import config
 import shutil
 import time
 
 def main(world_path: str):
     settings = config['settings']
+
+    # Fix issue #1
+    if not utils.is_folder(f'{world_path}/datapacks'):
+        logger.error('No datapacks folder found')
+        return
 
     if settings['add_tag_fix_pack']:
         logger.info('Copying over "tag-fix" pack to datapacks')

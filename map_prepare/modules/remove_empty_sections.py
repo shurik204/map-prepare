@@ -47,7 +47,7 @@ class RegionProcessor(threading.Thread):
             for z in range(32):
                 # Make sure to clear the previous chunk
                 chunk = None
-                chunk_modified = False
+                # chunk_modified = False
                 
                 try:
                     chunk = reg.get_nbt(x, z)
@@ -69,12 +69,12 @@ class RegionProcessor(threading.Thread):
                                 logger.debug(f'Removed section {chunk["Level"]["Sections"][section_index]["Y"]} from chunk ({x}, {z})')
                                 # Remove ir
                                 del chunk["Level"]["Sections"][section_index]
-                                chunk_modified = True
+                                # chunk_modified = True
 
                         if chunk['Level']['Sections'].__len__() == 0:
                             # Remove empty chunk
                             reg.unlink_chunk(x, z)
-                        elif chunk_modified:
+                        else:
                             new_reg.write_chunk(x,z,chunk)
 
         # Check if there is anything left

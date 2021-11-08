@@ -1,6 +1,0 @@
-{
-    "python.pythonPath": "/bin/python3",
-    "files.associations": {
-        "**/*.json": "jsonc"
-    }
-}

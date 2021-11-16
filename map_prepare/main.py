@@ -4,6 +4,7 @@ from map_prepare.lib.config import config, world_config
 from sys import argv, exit
 from nbt import nbt
 import importlib
+import zipfile
 import shutil
 import time
 import sys
@@ -15,11 +16,33 @@ import os
 #     shutil.rmtree(config['world'], ignore_errors=True)
 #     shutil.unpack_archive('world.zip')
 ############
-if argv.count('--debug') != 0: 
+if argv.count('--debug'): 
     logger.info('Forcefully enabled debug output. Spam incoming...')
     config['debug'] = True
 
-if argv.count('--one-thread') != 0: 
+if argv.count('--extract-world'):
+    if zipfile.is_zipfile('./world.zip'):
+        logger.info('Extracting test world')
+        try: shutil.rmtree('./world')
+        except FileNotFoundError: pass
+        zipfile.ZipFile('./world.zip').extractall()
+    else: 
+        logger.info('Test world must be a valid archive named "world.zip"')
+
+if argv.count('--directory'):
+    i = argv.index('--directory')
+    try:
+        work_dir = argv[i + 1]
+        os.chdir(work_dir)
+    except IndexError: 
+        logger.error('No argument supplied for "--directory"')
+        exit(6)
+    except FileNotFoundError:
+        logger.error('Provided directory doesn\'t exist')
+        exit(7)
+
+
+if argv.count('--one-thread'): 
     logger.info('Using one thread')
     config['threads'] = 1
 
@@ -36,7 +59,7 @@ if world_config == None:
     if getattr(sys, 'frozen', False):
         default_settings = os.path.join(sys._MEIPASS, 'map_prepare/global-settings.json')
     else:
-        default_settings = 'map_prepare/global-settings.json'
+        default_settings = f'{__file__[:-8]}/global-settings.json'
 
     shutil.copy(default_settings, f'{config["world"]}-map-prepare.json')
     logger.info(f'Review settings in "{config["world"]}-map-prepare.json" and launch this program again.')
@@ -63,7 +86,7 @@ modules = []
 if getattr(sys, 'frozen', False):
     modules_folder = os.path.join(sys._MEIPASS, 'map_prepare/modules')
 else:
-    modules_folder = 'map_prepare/modules'
+    modules_folder = f'{__file__[:-8]}/modules'
 # from time import sleep
 # sleep(1000)
 # Split modules into groups

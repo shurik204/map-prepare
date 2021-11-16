@@ -11,11 +11,18 @@
             "module": "map_prepare"
         },
         {
+            "name": "Python: Debug (One thread) Module",
+            "type": "python",
+            "request": "launch",
+            "module": "map_prepare",
+            "args": ["--debug", "--one-thread", "--extract-world"]
+        },
+        {
             "name": "Python: Debug Module",
             "type": "python",
             "request": "launch",
             "module": "map_prepare",
-            "args": ["--debug", "--one-thread"]
+            "args": ["--extract-world"]
         },
         {
             "name": "Python: Current File",

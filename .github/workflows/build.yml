@@ -1,8 +1,6 @@
 name: build
 
-on:
-  push:
-    branches: [ pyinstaller ]
+on: push
 
 jobs:
   createrelease:

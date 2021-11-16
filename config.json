@@ -17,7 +17,7 @@
   "world": "world",
   // How many threads modules can use at most.
   // Zero means # of CPU cores available.
-  "threads": 4,
+  "threads": 0,
   // Enable debug output
   "debug": false
 }

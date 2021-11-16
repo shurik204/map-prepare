@@ -58,7 +58,7 @@ Before running it make sure you copy your world into the folder with program and
 
 ## Run:
 ```sh
-python -m map-prepare
+python -m map_prepare
 ```
 
 A file named `[your_world_folder]-map-prepare.json` should've appeared in the folder. Change settings you need and relaunch the program.

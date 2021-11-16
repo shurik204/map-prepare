@@ -10,13 +10,22 @@ import os
 global current_version
 current_version = None
 
+latest_known = '1.17.1'
+
 class MinecraftVersion(object):
     """Represents minecraft version"""
     def __init__(self, version: str):
-        logger.info(f'Preparing cache for version "{version}"')
+        self._offline = False
 
-        # Get version list
-        launcher_manifest = ujson.loads(requests.get('http://launchermeta.mojang.com/mc/game/version_manifest_v2.json').text)
+        logger.info(f'Preparing cache for version "{version}"')
+        try:
+            # Get version list
+            launcher_manifest = ujson.loads(requests.get('http://launchermeta.mojang.com/mc/game/version_manifest_v2.json').text)
+        except requests.exceptions.ConnectionError:
+            logger.warn('It appears there is no connection to launchermeta.mojang.com')
+            launcher_manifest = {'latest': {'release': latest_known, 'snapshot': latest_known}}
+            self._offline = True
+
 
         # Get required version string
         if version in ['latest','snapshot']:
@@ -31,36 +40,45 @@ class MinecraftVersion(object):
             self.version = version
 
         self.version_data = None
-        # From all versions, grab the version we need
-        for x in launcher_manifest['versions']: 
-            if x['id'] == self.version:
-                # Load it's data
-                self.version_data = ujson.loads(requests.get(x['url']).text)
-                break
+        if not self._offline:
+            # From all versions, grab the version we need
+            for x in launcher_manifest['versions']: 
+                if x['id'] == self.version:
+                    # Load it's data
+                    self.version_data = ujson.loads(requests.get(x['url']).text)
+                    break
 
         self.version_cache_path = f'./cache/{self.version}'
+        self.cached_client_path = f'{self.version_cache_path}/client.jar'
 
         # Exit if given version does not exist
-        if self.version_data == None:
-            logger.fatal(f'Can\'t find version {self.version}. Exitting...')
-            exit(1)
+        # 1 and 0 -> False
+        # In any other case -> True
+        if not self._offline:
+            if not self.version_data:
+                logger.fatal(f'Can\'t find version {self.version}. Exitting...')
+                exit(1)
 
-        if not (self.version in os.listdir('./cache')):
+        
+
+        if not (self.version in os.listdir('./cache') and not (self.cached_client_path in os.listdir(self.version_cache_path))):
+            if self._offline:
+                logger.fatal(f'No connection to Mojang servers and no cache for version "{version}". GG. But maybe you have it somewhere?')
+                exit(5)
             logger.info(f'Generating cache for version {self.version}')
             os.mkdir(self.version_cache_path)
 
-        self.cached_client_path = f'{self.version_cache_path}/client.jar'
-
-        # Save client jar
-        self.download_client_jar()
+        if not self._offline:
+            # Save client jar
+            self.download_client_jar()
 
         # Check if file is an archive
         if not zipfile.is_zipfile(self.cached_client_path):
             logger.fatal(f'{self.cached_client_path} is not a valid archive. Removing it... Please, try restarting this program.')
             os.unlink(self.cached_client_path)
             exit(2)
-
-        self.set_language_list()
+        if not self._offline:
+            self.set_language_list()
 
         # Get default language dictionary
         try:
@@ -136,6 +154,8 @@ class MinecraftVersion(object):
         except KeyError:
             logger.warn('No version.json file found!')
             try:
+                if not self._offline: raise KeyError
+                
                 logger.info('Updating pack format using pack.mcmeta method')
                 self.pack_version['data'], self.pack_version['resource'] = pack_mcmeta_method()
                 logger.info(f'Pack format is {self.pack_version["data"]}')

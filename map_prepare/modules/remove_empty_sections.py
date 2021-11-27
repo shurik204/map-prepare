@@ -11,12 +11,6 @@ import time
 import io
 import os
 
-def blocks_exist(section: nbt.TAG_Compound):
-    try:
-        section['BlockStates']
-        return True
-    except KeyError: return False
-
 class RegionProcessor(multiprocessing.Process):
     def __init__(self, q: JoinableQueue):
         super().__init__(name=f'RegionProcessor-{multiprocessing.active_children().__len__()-1}', args=(q, ), target=self.actual_task)
@@ -61,18 +55,23 @@ class RegionProcessor(multiprocessing.Process):
 
                     if chunk != None:
                         if nbt_utils.sections_exist(chunk):
+
+                            # Minecraft 1.18 support
+                            try: chunk_sections = chunk["Level"]["Sections"]    # Default
+                            except KeyError: chunk_sections = chunk['sections'] # 1.18+
+
                             # Chunks are stored in 16x16x16 sections from 0 to 15.
                             # Go in reverse so I can modify the list
                             # i'm iterating through
-                            for section_index in range(chunk['Level']['Sections'].__len__()-1,0,-1):
+                            for section_index in range(chunk_sections.__len__()-1,0,-1):
                                 # If there is no BlockStates tag
-                                if not blocks_exist(chunk['Level']['Sections'][section_index]):
-                                    logger.debug(f'Removed section {chunk["Level"]["Sections"][section_index]["Y"]} from chunk ({x}, {z})')
-                                    # Remove ir
-                                    del chunk["Level"]["Sections"][section_index]
+                                if not nbt_utils.blocks_exist(chunk_sections[section_index]):
+                                    logger.debug(f'''Removed section {chunk_sections[section_index]['Y']} from chunk ({x}, {z})''')
+                                    # Remove it
+                                    del chunk_sections[section_index]
                                     # chunk_modified = True
 
-                            if chunk['Level']['Sections'].__len__() == 0:
+                            if chunk_sections.__len__() == 0 and not nbt_utils.entities_exist(chunk):
                                 # Remove empty chunk
                                 reg.unlink_chunk(x, z)
                             else:

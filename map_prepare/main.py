@@ -69,8 +69,9 @@ version_name = config['settings']['version']
 if version_name == '':
     level_dat = nbt.NBTFile(filename=f'{config["world"]}/level.dat')
     version_name = str(nbt_utils.get_property(nbt_utils.get_property(nbt_utils.get_property(level_dat, 'Data'), 'Version'), 'Name').value)
-    version_name.replace(' Release Candidate ', '-rc')
-    version_name.replace(' Pre-release ', '-pre')
+    # :(
+    version_name = version_name.replace(' Release Candidate ', '-rc')
+    version_name = version_name.replace(' Pre-release ', '-pre')
     logger.info(f'Auto-determined version id "{version_name}"')
 else:
     logger.info(f'Using version "{version_name}", specified in config file')

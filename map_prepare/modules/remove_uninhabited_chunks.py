@@ -53,11 +53,15 @@ class RegionProcessor(multiprocessing.Process):
                     except KeyError: pass
 
                     if chunk != None:
-                        if chunk['Level']['InhabitedTime'].value >= config['settings']['min_inhabited_time']:
+
+                        try: chunk_data = chunk['Level']
+                        except KeyError: chunk_data = chunk
+
+                        if chunk_data['InhabitedTime'].value >= config['settings']['min_inhabited_time']:
                             # Keep chunk if it meets requirement
                             new_reg.write_chunk(x,z,chunk)
                         else:
-                            logger.debug(f'Removed chunk ({x}, {z}) because InhabitedTime {chunk["Level"]["InhabitedTime"].value} < {config["settings"]["min_inhabited_time"]}')
+                            logger.debug(f'Removed chunk ({x}, {z}) because InhabitedTime {chunk_data["InhabitedTime"].value} < {config["settings"]["min_inhabited_time"]}')
 
             # Check if there is anything left
             # If region is empty:

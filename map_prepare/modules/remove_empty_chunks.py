@@ -1,18 +1,18 @@
 __priority__ = 97
 __group__ = 'regions'
 
-from map_prepare.lib import logger, utils
+from map_prepare.lib import logger, utils, nbt_utils
 from map_prepare.lib.config import config
 from multiprocessing import JoinableQueue
+from map_prepare.lib import anvil
 from nbt import nbt, region
 from queue import Empty
 import multiprocessing
-import anvil
 import time
 import io
 import os
 
-def is_empty_section(anvil_chunk, section= nbt.TAG_Compound):
+def is_empty_section(anvil_chunk: anvil.Chunk, section= nbt.TAG_Compound):
     for x in range(16):
         for y in range(16):
             for z in range(16):
@@ -20,11 +20,7 @@ def is_empty_section(anvil_chunk, section= nbt.TAG_Compound):
                     return False
     return True
 
-def palette_exists(section: nbt.TAG_Compound):
-    try:
-        section['Palette']
-        return True
-    except KeyError: return False
+
 
 class RegionProcessor(multiprocessing.Process):
     def __init__(self, q: JoinableQueue):
@@ -72,37 +68,30 @@ class RegionProcessor(multiprocessing.Process):
                     if chunk != None and anv_chunk != None:
                         empty_chunk = True
 
+                        # Minecraft 1.18 support
+                        try: chunk_sections = chunk["Level"]["Sections"]    # Default
+                        except KeyError: chunk_sections = chunk['sections'] # 1.18+
+                        
                         # Assume that it can be 1.17, where entities
                         # were moved into another region-like file
-                        no_entites = True
-                        try:
-                            # Pre 1.14 I guess?
-                            if isinstance(chunk['Level']['Entities'], nbt.TAG_Long_Array):
-                                no_entites = chunk['Level']['Entities'].__len__() == 0
-                            else: no_entites = chunk['Level']['Entities'].tagID == 0
-                        except KeyError: pass
+                        no_entities = nbt_utils.entities_exist(chunk)
 
-                        no_sections = True
-                        try:
-                            if isinstance(chunk['Level']['Sections'], nbt.TAG_Long_Array):
-                                no_sections = chunk['Level']['Sections'].__len__() == 0
-                            else: no_sections = chunk['Level']['Sections'].tagID == 0
-                        except KeyError: pass
+                        no_sections = nbt_utils.sections_exist(chunk)
 
                         if not no_sections:
                             # Try checking this chunk by looking for tile entities (chests, barrels, command blocks, etc.)
-                            try: empty_chunk = chunk['Level']['TileEntities'].tagID == 0
+                            try: empty_chunk = nbt_utils.block_entities_exist(chunk)
                             except KeyError: pass
-                            # Actually heavy check
+                            # Actually heavy check below
                             if empty_chunk:
                                 # Chunks are stored in 16x16x16 sections from 0 to 15.
                                 # For every section that exists in this chunk
-                                for section in chunk['Level']['Sections']:
-                                    if palette_exists(section):
+                                for section in chunk_sections:
+                                    if nbt_utils.palette_exists(section):
                                         empty_chunk = is_empty_section(anv_chunk, section)
                                         if not empty_chunk: break
 
-                        if empty_chunk and no_entites:
+                        if empty_chunk and no_entities:
                             # Remove empty chunk
                             reg.unlink_chunk(x, z)
                         else:
@@ -115,7 +104,7 @@ class RegionProcessor(multiprocessing.Process):
                 # Just remove the file
                 utils.delete_file(region_path)
             else:
-                logger.debug(f'Writing region "{region_path}" with {reg.chunk_count()} chunks')
+                logger.debug(f'Writing region "{region_path}" with {new_reg.chunk_count()} chunks')
                 # Write changes to file
                 with open(region_path, 'wb') as region_file:
                     # Make sure to seek to the beginning of the BytesIO

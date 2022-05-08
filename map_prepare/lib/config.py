@@ -1,3 +1,4 @@
+from multiprocessing import cpu_count
 from jsoncomment import JsonComment
 from map_prepare.lib import logger
 from typing import List
@@ -29,7 +30,7 @@ try:
     config['settings'] = JsonComment().load(open(world_config,'r'))
     logger.info('World contains config file, applying it...')
     # If thread count is invalid, set to # of available CPU cores
-    if config['threads'] <= 0: config['threads'] = os.sched_getaffinity(0).__len__()
+    if config['threads'] <= 0: config['threads'] = cpu_count()
 # If file is not there
 except (FileNotFoundError, IndexError): logger.info('Using default config')
 except (ValueError, IsADirectoryError) as e:

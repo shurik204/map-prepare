@@ -13,7 +13,7 @@ import os
 
 class RegionProcessor(multiprocessing.Process):
     def __init__(self, q: JoinableQueue):
-        super().__init__(name=f'RegionProcessor-{multiprocessing.active_children().__len__()-1}', args=(q, ), target=self.actual_task)
+        super().__init__(name=f'RegionProcessor-{utils.counter("emptysections")}', args=(q, ), target=self.actual_task)
         self.q = q
 
         self.start()
@@ -35,7 +35,12 @@ class RegionProcessor(multiprocessing.Process):
 
             # Empty region
             new_region_io = io.BytesIO()
-            new_reg = region.RegionFile(fileobj=new_region_io)
+            try:
+                new_reg = region.RegionFile(fileobj=new_region_io)
+            except region.RegionFileFormatError:
+                logger.warn(f'Skipped region file "{region_path}"')
+                q.task_done()
+                continue
 
             logger.info(f'Processing region "{region_path}" with {reg.chunk_count()} chunk{"s" if reg.chunk_count() != 1 else ""}')
             for x in range(32):
@@ -52,7 +57,8 @@ class RegionProcessor(multiprocessing.Process):
                     except region.ChunkHeaderError: reg.unlink_chunk(x, z)
                     # Added KeyError to prevent crash because TileEntities is missing (ToG is a weird map)
                     except KeyError: pass
-
+                    except region.MalformedFileError: logger.warn(f'Skipped malformed chunk ({x},{z})')
+                    
                     if chunk != None:
                         if nbt_utils.sections_exist(chunk):
 
@@ -113,7 +119,7 @@ def main(world_path: str):
         # logger.info(f'Processing folder "{region_folder_path}"')
 
         for region_name in os.listdir(region_folder_path):
-            # Filter out bad chunks
+            # Filter out bad region files
             try:
                 # Construct path to region file
                 region_path = f'{region_folder_path}/{region_name}'

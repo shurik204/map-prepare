@@ -24,7 +24,7 @@ def is_empty_section(anvil_chunk: anvil.Chunk, section= nbt.TAG_Compound):
 
 class RegionProcessor(multiprocessing.Process):
     def __init__(self, q: JoinableQueue):
-        super().__init__(name=f'RegionProcessor-{multiprocessing.active_children().__len__()-1}', args=(q, ), target=self.actual_task)
+        super().__init__(name=f'RegionProcessor-{utils.counter("emptychunks")}', args=(q, ), target=self.actual_task)
         self.q = q
 
         self.start()

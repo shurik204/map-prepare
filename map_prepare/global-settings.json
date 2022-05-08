@@ -48,8 +48,8 @@
   "remove_empty_sections": true,
   // Enable category "level_dat"
   "modify_level_dat": true,
-  // If modify_level_dat is disabled, non of the values
-  // in this category will not apply
+  // If modify_level_dat is disabled, none of the values
+  // in this category will be applied
   "level_dat": {
     // Disable vanilla datapack
     // Make sure to enable add_tag_fix_pack

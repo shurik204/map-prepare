@@ -1,4 +1,4 @@
-from typing import List
+from typing import Dict, List
 from map_prepare.lib import logger
 from nbt import nbt
 import zipfile
@@ -119,3 +119,13 @@ def get_all_region_folders(world_path: str) -> List[str]:
     except FileNotFoundError: pass
 
     return region_folders
+
+global _counter_history
+_counter_history = {}
+def counter(key: str) -> int:
+    try:
+        _counter_history[key] += 1
+        return _counter_history[key] 
+    except KeyError:
+        _counter_history.update({f'{key}': 0})
+        return 0

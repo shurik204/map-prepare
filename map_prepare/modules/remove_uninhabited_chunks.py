@@ -13,7 +13,7 @@ import os
 
 class RegionProcessor(multiprocessing.Process):
     def __init__(self, q: JoinableQueue):
-        super().__init__(name=f'RegionProcessor-{multiprocessing.active_children().__len__()}', args=(q, ), target=self.actual_task)
+        super().__init__(name=f'RegionProcessor-{utils.counter("uninhabitedchunks")}', args=(q, ), target=self.actual_task)
         self.q = q
 
         self.start()

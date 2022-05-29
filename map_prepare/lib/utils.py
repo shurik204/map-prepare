@@ -1,6 +1,6 @@
 from typing import Dict, List
 from map_prepare.lib import logger
-from nbt import nbt
+from map_prepare.lib.nbt import nbt
 import zipfile
 import shutil
 import os

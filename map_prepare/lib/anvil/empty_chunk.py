@@ -2,7 +2,7 @@ from typing import List
 from .block import Block
 from .empty_section import EmptySection
 from .errors import OutOfBoundsCoordinates, EmptySectionAlreadyExists
-from nbt import nbt
+from map_prepare.lib.nbt import nbt
 
 class EmptyChunk:
     """

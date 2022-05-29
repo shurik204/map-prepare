@@ -1,4 +1,3 @@
-from requests.models import HTTPError
 from map_prepare.lib import logger
 from sys import exit
 import requests
@@ -10,7 +9,7 @@ import os
 global current_version
 current_version = None
 
-latest_known = '1.17.1'
+latest_known = '1.18.2'
 
 class MinecraftVersion(object):
     """Represents minecraft version"""

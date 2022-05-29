@@ -1,4 +1,4 @@
-from nbt import nbt
+from map_prepare.lib.nbt import nbt
 
 def get_property(tag: nbt.TAG_Compound, property: str):
     return filter(lambda x: x.name == property, tag.tags).__next__()

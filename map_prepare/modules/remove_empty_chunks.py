@@ -5,7 +5,7 @@ from map_prepare.lib import logger, utils, nbt_utils
 from map_prepare.lib.config import config
 from multiprocessing import JoinableQueue
 from map_prepare.lib import anvil
-from nbt import nbt, region
+from map_prepare.lib.nbt import nbt, region
 from queue import Empty
 import multiprocessing
 import time

@@ -3,7 +3,7 @@ __group__ = 'regions'
 
 from map_prepare.lib.config import config
 from map_prepare.lib import logger, utils
-from nbt import nbt, region
+from map_prepare.lib.nbt import nbt, region
 import io
 import os
 import re

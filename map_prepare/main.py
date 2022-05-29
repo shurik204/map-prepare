@@ -2,13 +2,18 @@
 from map_prepare.lib import logger, nbt_utils, cache
 from map_prepare.lib.config import config, world_config
 from sys import argv, exit
-from nbt import nbt
+from map_prepare.lib.nbt import nbt
+import multiprocessing
 import importlib
 import zipfile
 import shutil
 import time
 import sys
 import os
+
+if sys.platform.startswith('win'):
+    # On Windows calling this function is necessary.
+    multiprocessing.freeze_support()
 
 ##########
 # DEBUG

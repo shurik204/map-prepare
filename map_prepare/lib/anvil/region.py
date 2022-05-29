@@ -1,5 +1,5 @@
 from typing import Tuple, Union, BinaryIO
-from nbt import nbt
+from map_prepare.lib.nbt import nbt
 import zlib
 from io import BytesIO
 from map_prepare.lib import anvil

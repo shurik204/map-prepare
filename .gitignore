@@ -25,3 +25,8 @@ world/
 dist/
 build/
 .vscode/settings.json
+
+# Python venv
+Scripts/
+Lib/
+pyvenv.cfg

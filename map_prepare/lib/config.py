@@ -1,5 +1,5 @@
 from multiprocessing import cpu_count
-from jsoncomment import JsonComment
+import commentjson as json
 from map_prepare.lib import logger
 from typing import List
 from sys import exit
@@ -9,7 +9,7 @@ import os
 
 try:
     # Load default config
-    config = JsonComment().load(open('config.json', 'r'))
+    config = json.load(open('config.json', 'r'))
 except (FileNotFoundError):
     logger.warn('No config.json file found. Creating it...')
     # Support for pyinstaller
@@ -20,14 +20,14 @@ except (FileNotFoundError):
 
     shutil.copy(default_config_path, 'config.json')
     # Read just created config
-    config = JsonComment().load(open('config.json', 'r'))
+    config = json.load(open('config.json', 'r'))
 
 try:
     world_config = None
     world_config = list(filter(lambda x: x == f'{config["world"]}-map-prepare.json', os.listdir('.')))[0]
     # Look for config file in the world and update it with
     world_config = list(filter(lambda x: x.endswith('map-prepare.json'), os.listdir(config['world'])))[0] if world_config == None else world_config
-    config['settings'] = JsonComment().load(open(world_config,'r'))
+    config['settings'] = json.load(open(world_config,'r'))
     logger.info('World contains config file, applying it...')
     # If thread count is invalid, set to # of available CPU cores
     if config['threads'] <= 0: config['threads'] = cpu_count()
@@ -39,4 +39,4 @@ except (ValueError, IsADirectoryError) as e:
 
 # Remove all unnessesary things
 
-del List, logger, JsonComment, os
+del List, logger, os, json

@@ -5,7 +5,7 @@ from .empty_section import EmptySection
 from .block import Block
 from .errors import OutOfBoundsCoordinates
 from io import BytesIO
-from nbt import nbt
+from map_prepare.lib.nbt import nbt
 import zlib
 import math
 

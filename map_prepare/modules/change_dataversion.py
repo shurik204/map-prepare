@@ -3,7 +3,7 @@ __group__ = 'misc'
 
 from map_prepare.lib import cache, utils, logger
 from map_prepare.lib.config import config
-from nbt import nbt, region
+from map_prepare.lib.nbt import nbt, region
 import io
 import os
 

@@ -135,13 +135,13 @@
     // Uncomment to enable it
     // You can also add multiple regex patterns
     // (Make sure they won't overlap though)
-    /* {
+    // {
       // String to look for
-      "find": "(replace)(item) (entity|block) ((@.\\[.*?\\]|@.)|(.*? .*? .*?)) ([a-z\\.0-9]*)",
+      // "find": "(replace)(item) (entity|block) ((@.\\[.*?\\]|@.)|(.*? .*? .*?)) ([a-z\\.0-9]*)",
       // String to replace with
       // Make sure to replace $number with \\number
-      "replace": "\\2 \\1 \\3 \\4 \\7 with"
-      } */
+      // "replace": "\\2 \\1 \\3 \\4 \\7 with"
+    // }
   ],
   // Remove empty files with following extension
   "remove_empty_files": [

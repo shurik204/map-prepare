@@ -2,7 +2,7 @@ from typing import List, Tuple, Sequence, Iterable
 from . import EmptySection, Block
 from .errors import OutOfBoundsCoordinates
 import array
-from nbt import nbt
+from map_prepare.lib.nbt import nbt
 
 def bin_append(a, b, length=None):
     length = length or b.bit_length()

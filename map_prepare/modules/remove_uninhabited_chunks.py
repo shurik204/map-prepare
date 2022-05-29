@@ -5,7 +5,7 @@ from map_prepare.lib import logger, utils
 from map_prepare.lib.config import config
 from multiprocessing import JoinableQueue
 from queue import Empty
-from nbt import region
+from map_prepare.lib.nbt import region
 import multiprocessing
 import time
 import io

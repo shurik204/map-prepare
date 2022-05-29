@@ -3,7 +3,7 @@ __group__ = "level_dat"
 
 from map_prepare.lib import utils, nbt_utils, logger, cache
 from map_prepare.lib.config import config
-from nbt import nbt
+from map_prepare.lib.nbt import nbt
 import string
 import copy
 

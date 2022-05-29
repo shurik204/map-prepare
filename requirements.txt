@@ -1,7 +1,7 @@
 # JSON parser. Much faster than built-in
 ujson
 # JSON comments
-jsoncomment
+commentjson
 # NBT support
 nbt
 # Chunk reading

@@ -1,5 +1,5 @@
 from typing import Union, Tuple, Generator, Optional
-from nbt import nbt
+from map_prepare.lib.nbt import nbt
 from .block import Block, OldBlock
 from .region import Region
 from .errors import OutOfBoundsCoordinates, ChunkNotFound

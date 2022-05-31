@@ -2,9 +2,5 @@
 ujson
 # JSON comments
 commentjson
-# NBT support
-nbt
-# Chunk reading
-anvil-parser
 # HTTP requests
 requests

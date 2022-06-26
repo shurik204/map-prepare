@@ -2,7 +2,6 @@ __priority__ = 99
 __group__ = 'global'
 
 from map_prepare.lib import utils, logger
-import shutil
 import os
 
 

@@ -1,7 +1,6 @@
-from multiprocessing import cpu_count
+from multiprocessing import cpu_count, current_process
 import commentjson as json
 from map_prepare.lib import logger
-from typing import List
 from sys import exit
 import shutil
 import sys
@@ -36,7 +35,3 @@ except (FileNotFoundError, IndexError): logger.info('Using default config')
 except (ValueError, IsADirectoryError) as e:
     logger.fatal(f'File "{world_config}". Reason: "{e}". Fix or remove it and restart the script.')
     exit(0)
-
-# Remove all unnessesary things
-
-del List, logger, os, json

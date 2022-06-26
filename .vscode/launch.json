@@ -15,14 +15,14 @@
             "type": "python",
             "request": "launch",
             "module": "map_prepare",
-            "args": ["--debug", "--one-thread", "--extract-world"]
+            "args": ["--debug", "--one-thread", "--extract-world", "--use-spawn"]
         },
         {
             "name": "Python: Debug Module",
             "type": "python",
             "request": "launch",
             "module": "map_prepare",
-            "args": ["--extract-world"]
+            "args": ["--extract-world", "--use-spawn"]
         }
     ]
 }

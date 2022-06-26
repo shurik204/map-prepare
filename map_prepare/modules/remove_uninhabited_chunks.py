@@ -10,14 +10,12 @@ import time
 import io
 import os
 
-class RegionProcessor():
+class RegionProcessor(multiprocessing.Process):
     def __init__(self, q: JoinableQueue, min_inhabited_time: int):
         self.q = q
         self.min_inhabited_time = min_inhabited_time
-    
-    def start(self):
-        self.process = multiprocessing.Process(name=f'RegionProcessor-{utils.counter("emptychunks")}', args=(self.q, ), target=self.actual_task)
-        self.process.start()
+        super().__init__(name=f'RegionProcessor-{utils.counter("uninhabitedchunks")}', args=(self.q, ), target=self.actual_task)
+        self.start()
 
     def actual_task(self, q):
         while True:
@@ -123,7 +121,6 @@ def main(config: dict):
     for _ in range(config['threads']):
         thread = RegionProcessor(q, min_inhabited_time)
         threads.append(thread)
-        thread.start()
         
     files_left = q.qsize()
     while (q.qsize()):

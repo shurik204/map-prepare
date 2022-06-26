@@ -14,9 +14,6 @@ import os
 if sys.platform.startswith('win'):
     # On Windows calling this function is necessary.
     multiprocessing.freeze_support()
-else:
-    # Make Linux and Macos behave the same way.
-    multiprocessing.set_start_method('spawn')
 
 ##########
 # DEBUG
@@ -27,6 +24,10 @@ else:
 if argv.count('--debug'): 
     logger.info('Forcefully enabled debug output. Spam incoming...')
     config['debug'] = True
+
+if argv.count('--use-spawn'): 
+    logger.info('Using start method "spawn" for multiprocessing')
+    multiprocessing.set_start_method('spawn')
 
 if argv.count('--extract-world'):
     if zipfile.is_zipfile('./world.zip'):

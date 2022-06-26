@@ -27,6 +27,4 @@ build/
 .vscode/settings.json
 
 # Python venv
-Scripts/
-Lib/
-pyvenv.cfg
+/venv/

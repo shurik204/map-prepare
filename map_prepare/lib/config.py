@@ -14,9 +14,9 @@ except (FileNotFoundError):
     logger.warn('No config.json file found. Creating it...')
     # Support for pyinstaller
     if getattr(sys, 'frozen', False):
-        default_config_path = os.path.join(sys._MEIPASS, 'map_prepare/default-config.json')
+        default_config_path = os.path.join(sys._MEIPASS, 'map_prepare', 'default-config.json')
     else:
-        default_config_path = 'map_prepare/default-config.json'
+        default_config_path = os.path.join('map_prepare','default-config.json')
 
     shutil.copy(default_config_path, 'config.json')
     # Read just created config

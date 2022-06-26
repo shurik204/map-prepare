@@ -2,21 +2,22 @@ __priority__ = 99
 __group__ = 'regions'
 
 from map_prepare.lib import logger, utils
-from map_prepare.lib.config import config
 from multiprocessing import JoinableQueue
 from queue import Empty
-from map_prepare.lib.nbt import region
+from nbt import region
 import multiprocessing
 import time
 import io
 import os
 
-class RegionProcessor(multiprocessing.Process):
-    def __init__(self, q: JoinableQueue):
-        super().__init__(name=f'RegionProcessor-{utils.counter("uninhabitedchunks")}', args=(q, ), target=self.actual_task)
+class RegionProcessor():
+    def __init__(self, q: JoinableQueue, min_inhabited_time: int):
         self.q = q
-
-        self.start()
+        self.min_inhabited_time = min_inhabited_time
+    
+    def start(self):
+        self.process = multiprocessing.Process(name=f'RegionProcessor-{utils.counter("emptychunks")}', args=(self.q, ), target=self.actual_task)
+        self.process.start()
 
     def actual_task(self, q):
         while True:
@@ -57,11 +58,11 @@ class RegionProcessor(multiprocessing.Process):
                         try: chunk_data = chunk['Level']
                         except KeyError: chunk_data = chunk
 
-                        if chunk_data['InhabitedTime'].value >= config['settings']['min_inhabited_time']:
+                        if chunk_data['InhabitedTime'].value >= self.min_inhabited_time:
                             # Keep chunk if it meets requirement
                             new_reg.write_chunk(x,z,chunk)
                         else:
-                            logger.debug(f'Removed chunk ({x}, {z}) because InhabitedTime {chunk_data["InhabitedTime"].value} < {config["settings"]["min_inhabited_time"]}')
+                            logger.debug(f'Removed chunk ({x}, {z}) because InhabitedTime {chunk_data["InhabitedTime"].value} < {self.min_inhabited_time}')
 
             # Check if there is anything left
             # If region is empty:
@@ -82,6 +83,9 @@ class RegionProcessor(multiprocessing.Process):
 
 
 def main(world_path: str):
+    # Move import here to avoid Bad Things
+    from map_prepare.lib.config import config
+
     if config['settings']['min_inhabited_time'] <= -1:
         return
 
@@ -115,9 +119,12 @@ def main(world_path: str):
     logger.info(f'Found {total_chunks} chunks in {total_files} region files')
 
     # multiprocessing.set_start_method('spawn')
+    min_inhabited_time = config["settings"]["min_inhabited_time"]
     threads = []
     for _ in range(config['threads']):
-        threads.append(RegionProcessor(q))
+        thread = RegionProcessor(q, min_inhabited_time)
+        threads.append(thread)
+        thread.start()
         
     files_left = q.qsize()
     while (q.qsize()):

@@ -2,21 +2,21 @@ __priority__ = 98
 __group__ = 'regions'
 
 from map_prepare.lib import logger, utils, nbt_utils
-from map_prepare.lib.config import config
 from multiprocessing import JoinableQueue
-from map_prepare.lib.nbt import nbt, region
+from nbt import nbt, region
 from queue import Empty
 import multiprocessing
 import time
 import io
 import os
 
-class RegionProcessor(multiprocessing.Process):
+class RegionProcessor():
     def __init__(self, q: JoinableQueue):
-        super().__init__(name=f'RegionProcessor-{utils.counter("emptysections")}', args=(q, ), target=self.actual_task)
         self.q = q
-
-        self.start()
+    
+    def start(self):
+        self.process = multiprocessing.Process(name=f'RegionProcessor-{utils.counter("emptychunks")}', args=(self.q, ), target=self.actual_task)
+        self.process.start()
 
     def actual_task(self, q):
         while True:
@@ -102,6 +102,9 @@ class RegionProcessor(multiprocessing.Process):
 
 
 def main(world_path: str):
+    # Move import here to avoid Bad Things
+    from map_prepare.lib.config import config
+
     if not config['settings']['remove_empty_sections']:
         return
 
@@ -134,10 +137,13 @@ def main(world_path: str):
 
     logger.info(f'Found {total_chunks} chunks in {total_files} region files')
 
+
     # multiprocessing.set_start_method('spawn')
     threads = []
     for _ in range(config['threads']):
-        threads.append(RegionProcessor(q))
+        thread = RegionProcessor(q)
+        threads.append(thread)
+        thread.start()
         
     files_left = q.qsize()
     while (q.qsize()):

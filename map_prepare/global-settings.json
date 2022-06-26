@@ -110,23 +110,23 @@
     // This list will merge with world's gamerules,
     // overwriting gamerule value if it's present here
     "gamerules": {
-      "reducedDebugInfo": "true",
-      "disableElytraMovementCheck": "true",
-      "announceAdvancements": "false",
-      "commandBlockOutput": "false",
-      "doMobSpawning": "false",
-      "disableRaids": "true",
-      "doWeatherCycle": "false",
-      "doDaylightCycle": "false",
-      "doInsomnia": "false",
-      "doLimitedCrafting": "true",
+      "reducedDebugInfo": true,
+      "disableElytraMovementCheck": true,
+      "announceAdvancements": false,
+      "commandBlockOutput": false,
+      "doMobSpawning": false,
+      "disableRaids": true,
+      "doWeatherCycle": false,
+      "doDaylightCycle": false,
+      "doInsomnia": false,
+      "doLimitedCrafting": true,
       "randomTickSpeed": 0,
       "spawnRadius": 0,
-      "doTraderSpawning": "false",
-      "logAdminCommands": "false",
-      "spectatorsGenerateChunks": "false",
-      "sendCommandFeedback": "false",
-      "doPatrolSpawning": "false"
+      "doTraderSpawning": false,
+      "logAdminCommands": false,
+      "spectatorsGenerateChunks": false,
+      "sendCommandFeedback": false,
+      "doPatrolSpawning": false
     }
   },
   // Replace commands in command blocks using regex

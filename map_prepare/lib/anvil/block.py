@@ -1,4 +1,4 @@
-from map_prepare.lib.nbt import nbt
+from nbt import nbt
 from frozendict import frozendict
 from .legacy import LEGACY_ID_MAP
 

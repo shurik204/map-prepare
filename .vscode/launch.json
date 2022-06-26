@@ -8,7 +8,7 @@
             "name": "Python: Module",
             "type": "python",
             "request": "launch",
-            "module": "map_prepare"
+            "module": "map_prepare",
         },
         {
             "name": "Python: Debug (One thread) Module",
@@ -23,13 +23,6 @@
             "request": "launch",
             "module": "map_prepare",
             "args": ["--extract-world"]
-        },
-        {
-            "name": "Python: Current File",
-            "type": "python",
-            "request": "launch",
-            "program": "${file}",
-            "console": "integratedTerminal"
         }
     ]
 }

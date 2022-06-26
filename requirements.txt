@@ -4,3 +4,7 @@ ujson
 commentjson
 # HTTP requests
 requests
+# NBT support
+nbt
+# Anvil requitements
+frozendict

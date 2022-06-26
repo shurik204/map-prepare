@@ -1,7 +1,7 @@
 from typing import List, Tuple
 from . import Block
 from .errors import OutOfBoundsCoordinates
-from map_prepare.lib.nbt import nbt
+from nbt import nbt
 from struct import Struct
 import array
 

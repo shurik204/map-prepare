@@ -2,7 +2,7 @@
 from map_prepare.lib import logger, nbt_utils, cache
 from map_prepare.lib.config import config, world_config
 from sys import argv, exit
-from map_prepare.lib.nbt import nbt
+from nbt import nbt
 import multiprocessing
 import importlib
 import zipfile
@@ -14,6 +14,9 @@ import os
 if sys.platform.startswith('win'):
     # On Windows calling this function is necessary.
     multiprocessing.freeze_support()
+else:
+    # Make Linux and Macos behave the same way.
+    multiprocessing.set_start_method('spawn')
 
 ##########
 # DEBUG

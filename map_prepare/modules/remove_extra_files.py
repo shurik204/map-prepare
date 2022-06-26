@@ -2,12 +2,13 @@ __priority__ = 99
 __group__ = 'global'
 
 from map_prepare.lib import utils, logger
-from map_prepare.lib.config import config, world_config
 import shutil
 import os
 
 
-def main(world_path: str):
+def main(config: dict):
+    world_path = config['world']
+
     logger.info('Removing extra files from world folder')
 
     # if 'map-prepare.json' in os.listdir(world_path):

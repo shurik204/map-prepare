@@ -2,12 +2,13 @@ __priority__ = 0
 __group__ = 'final'
 
 from map_prepare.lib.in_memory_zipfile import InMemoryZipFile
-from map_prepare.lib.config import config
 from map_prepare.lib import logger
 import string
 import os
 
-def main(world_path: str):
+def main(config: dict):
+    world_path = config['world']
+
     settings = config['settings']
 
     if not settings['zip_world']:

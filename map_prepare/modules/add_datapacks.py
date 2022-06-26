@@ -2,11 +2,12 @@ __priority__ = 1
 __group__ = 'datapacks'
 
 from map_prepare.lib import logger, cache, utils
-from map_prepare.lib.config import config
 import shutil
 import time
 
-def main(world_path: str):
+def main(config: dict):
+    world_path = config['world']
+
     settings = config['settings']
 
     # Fix issue #1

@@ -2,12 +2,13 @@ __priority__ = 0
 __group__ = 'misc'
 
 from map_prepare.lib import cache, utils, logger
-from map_prepare.lib.config import config
 from nbt import nbt, region
 import io
 import os
 
-def main(world_path: str):
+def main(config: dict):
+    world_path = config['world']
+
     if not config['settings']['update_data_version']:
         return
     # Use config['settings']['data_version'] if it's not 0. Otherwise provided by 

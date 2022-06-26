@@ -125,6 +125,6 @@ for group in config['groups']:
     for module in group_modules:
         # Check if there is an object "main" and if it's a function or not
         if hasattr(module, 'main') and callable(module.main):
-            module.main(config['world'])
+            module.main(config)
         else:
             logger.error(f'Module {module.__file__} doesn\'t contain main() function! Skipping it.')

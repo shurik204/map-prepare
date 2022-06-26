@@ -3,7 +3,6 @@ __group__ = 'misc'
 
 from map_prepare.lib.in_memory_zipfile import InMemoryZipFile
 from map_prepare.lib import logger, cache, utils
-from map_prepare.lib.config import config
 import zipfile
 import ujson
 import os
@@ -22,7 +21,9 @@ def repack_archive(file_to_replace: str, new_contents: str, zip_file: zipfile.Zi
     return new_zip_file
 
 
-def main(world_path: str):
+def main(config: dict):
+    world_path = config['world']
+
     settings = config['settings']
 
     if not settings['update_pack_mcmeta']:

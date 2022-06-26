@@ -82,9 +82,8 @@ class RegionProcessor():
             q.task_done()
 
 
-def main(world_path: str):
-    # Move import here to avoid Bad Things
-    from map_prepare.lib.config import config
+def main(config: dict):
+    world_path = config['world']
 
     if config['settings']['min_inhabited_time'] <= -1:
         return

@@ -2,11 +2,12 @@ __priority__ = 98
 __group__ = 'global'
 
 from map_prepare.lib import utils, logger
-from map_prepare.lib.config import config
 import os
 
 
-def main(world_path: str):
+def main(config: dict):
+    world_path = config['world']
+
     try:
         if config['settings']['remove_empty_files'].__len__() != 0: logger.info('Removing empty files from world folder')
     except KeyError: return

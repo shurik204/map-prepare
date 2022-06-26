@@ -1,7 +1,6 @@
 __priority__ = 0
 __group__ = 'regions'
 
-from map_prepare.lib.config import config
 from map_prepare.lib import logger, utils
 from nbt import nbt, region
 import io
@@ -10,7 +9,9 @@ import re
 
 
 
-def main(world_path: str):
+def main(config: dict):
+    world_path = config['world']
+
     settings = config['settings']
 
     try:

@@ -2,13 +2,14 @@ __priority__ = 0
 __group__ = 'resourcepacks'
 
 from map_prepare.lib import utils, logger
-from map_prepare.lib.config import config
 from sys import exit
 import zipfile
 import shutil
 import os
 
-def main(world_path: str):
+def main(config: dict):
+    world_path = config['world']
+
     if config['settings']['resourcepack'] != '':
         logger.info('Adding resourcepack to world folder')
         # Copy resourcepack to world folder

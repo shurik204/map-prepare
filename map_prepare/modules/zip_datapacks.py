@@ -1,12 +1,13 @@
 __priority__ = 0
 __group__ = 'datapacks'
 
-from map_prepare.lib.config import config
 from map_prepare.lib import utils, logger
 import shutil
 import os
 
-def main(world_path):
+def main(config: dict):
+    world_path = config['world']
+
     if config['settings']['zip_datapacks']:
 
         # Fix issue #1

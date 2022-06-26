@@ -2,7 +2,6 @@ __priority__ = 0
 __group__ = "level_dat"
 
 from map_prepare.lib import utils, nbt_utils, logger, cache
-from map_prepare.lib.config import config
 from nbt import nbt
 import string
 import copy
@@ -28,7 +27,9 @@ def remove_datapack(datapack_name: str):
     # If deletion failed or datapack wasn't found
     return False
 
-def main(world_path: str):
+def main(config: dict):
+    world_path = config['world']
+
     global level_dat
 
     if not config['settings']['modify_level_dat']:

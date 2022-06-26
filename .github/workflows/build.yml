@@ -37,7 +37,7 @@ jobs:
         include:
           - os: macos-latest
             TARGET: macos
-            CMD_BUILD: pyinstaller --onefile --console --clean --hidden-import zipfile --collect-all nbt --collect-all frozendict --add-data "map_prepare;map_prepare" --icon icon.ico -n map-prepare-macos map_prepare/__main__.py
+            CMD_BUILD: pyinstaller --onefile --console --clean --hidden-import zipfile --collect-all nbt --collect-all frozendict --add-data "map_prepare:map_prepare" --icon icon.ico -n map-prepare-macos map_prepare/__main__.py
             OUT_FILE_NAME: map-prepare-macos
             ASSET_MIME: application/octet-stream
           - os: windows-latest
@@ -47,7 +47,7 @@ jobs:
             ASSET_MIME: application/vnd.microsoft.portable-executable
           - os: ubuntu-latest
             TARGET: x86_64-linux-gnu
-            CMD_BUILD: pyinstaller --onefile --console --clean --hidden-import zipfile --collect-all nbt --collect-all frozendict --add-data "map_prepare;map_prepare" --icon icon.ico -n map-prepare-linux map_prepare/__main__.py
+            CMD_BUILD: pyinstaller --onefile --console --clean --hidden-import zipfile --collect-all nbt --collect-all frozendict --add-data "map_prepare:map_prepare" --icon icon.ico -n map-prepare-linux map_prepare/__main__.py
             OUT_FILE_NAME: map-prepare-linux
             ASSET_MIME: application/octet-stream
     steps:

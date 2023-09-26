@@ -10,7 +10,7 @@ import math
 # so a block value isn't in multiple elements of the array
 _VERSION_20w17a = 2529
 
-# This is the version where "The Flattening" (https://minecraft.gamepedia.com/Java_Edition_1.13/Flattening) happened
+# This is the version where "The Flattening" (https://minecraft.wiki/w/Java_Edition_1.13/Flattening) happened
 # where blocks went from numeric ids to namespaced ids (namespace:block_id)
 _VERSION_17w47a = 1451
 
@@ -61,7 +61,7 @@ class Chunk:
             self.version = nbt_data['DataVersion'].value
         except KeyError:
             # Version is pre-1.9 snapshot 15w32a, so world does not have a Data Version.
-            # See https://minecraft.fandom.com/wiki/Data_version
+            # See https://minecraft.wiki/w/Data_version
             self.version = None
 
         if self.version < _VERSION_21w43a:
@@ -160,7 +160,7 @@ class Chunk:
             y %= 16
 
         if self.version is None or self.version < _VERSION_17w47a:
-            # Explained in depth here https://minecraft.gamepedia.com/index.php?title=Chunk_format&oldid=1153403#Block_format
+            # Explained in depth here https://minecraft.wiki/w/WChunk_format?oldid=1153403#Block_format
 
             if section is None or 'Blocks' not in section:
                 if force_new:

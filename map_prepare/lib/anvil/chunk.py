@@ -160,7 +160,7 @@ class Chunk:
             y %= 16
 
         if self.version is None or self.version < _VERSION_17w47a:
-            # Explained in depth here https://minecraft.wiki/w/WChunk_format?oldid=1153403#Block_format
+            # Explained in depth here https://minecraft.wiki/w/Chunk_format?oldid=1153403#Block_format
 
             if section is None or 'Blocks' not in section:
                 if force_new:
